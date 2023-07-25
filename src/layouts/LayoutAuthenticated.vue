@@ -97,12 +97,11 @@ const menuClick = (event, item) => {
       />
       <slot />
       <FooterBar>
-        Get more with
         <a
-          href="https://tailwind-vue.justboil.me/"
+          href="https://tokiniaina.netlify.app/"
           target="_blank"
           class="text-blue-600"
-          >Premium version</a
+          >Site web</a
         >
       </FooterBar>
     </div>
