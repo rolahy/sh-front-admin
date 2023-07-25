@@ -17,7 +17,7 @@ useMainStore().setUser({
   name: "John Doe",
   email: "john@example.com",
   avatar:
-    "https://avatars.dicebear.com/api/avataaars/example.svg?options[top][]=shortHair&options[accessoriesChance]=93",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQH15y2-4Eiob8-0wypq8c0Ej83391IgPk4Jg&usqp=CAU",
 });
 
 const layoutAsidePadding = "xl:pl-60";
