@@ -1,6 +1,5 @@
 <script setup>
 import { computed, ref, onMounted } from "vue";
-import { useMainStore } from "@/stores/main";
 import { mdiEye, mdiTrashCan } from "@mdi/js";
 import CardBoxModal from "@/components/CardBoxModal.vue";
 import TableCheckboxCell from "@/components/TableCheckboxCell.vue";
@@ -16,15 +15,11 @@ defineProps({
 
 const userStore = useUserStore();
 
-const mainStore = useMainStore();
-
-const items = computed(() => mainStore.clients);
-
 const isModalActive = ref(false);
 
 const isModalDangerActive = ref(false);
 
-const perPage = ref(5);
+const perPage = ref(3);
 
 const currentPage = ref(0);
 
@@ -37,7 +32,7 @@ const itemsPaginated = computed(() =>
   )
 );
 
-const numPages = computed(() => Math.ceil(items.value.length / perPage.value));
+const numPages = computed(() => Math.ceil(users.value.length / perPage.value));
 
 const currentPageHuman = computed(() => currentPage.value + 1);
 
@@ -113,8 +108,8 @@ onMounted(() => {
       <tr>
         <th v-if="checkable" />
         <th />
-        <th>Name</th>
-        <th>Company</th>
+        <th>Mail</th>
+        <th>Role</th>
         <th>City</th>
         <th>Progress</th>
         <th>Created</th>
@@ -134,10 +129,10 @@ onMounted(() => {
           />
         </td>
         <td data-label="Name">
-          {{ client.roles[0].role }}
+          {{ client.username }}
         </td>
         <td data-label="Company">
-          <!-- {{ client.company }} -->
+          {{ client.roles[0].role }}
         </td>
         <td data-label="City">
           <!-- {{ client.city }} -->
