@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, onMounted } from "vue";
 import { useMainStore } from "@/stores/main";
 import { mdiEye, mdiTrashCan } from "@mdi/js";
 import CardBoxModal from "@/components/CardBoxModal.vue";
@@ -8,10 +8,13 @@ import BaseLevel from "@/components/BaseLevel.vue";
 import BaseButtons from "@/components/BaseButtons.vue";
 import BaseButton from "@/components/BaseButton.vue";
 import UserAvatar from "@/components/UserAvatar.vue";
+import { useUserStore } from "@/stores/user";
 
 defineProps({
   checkable: Boolean,
 });
+
+const userStore = useUserStore();
 
 const mainStore = useMainStore();
 
@@ -21,14 +24,14 @@ const isModalActive = ref(false);
 
 const isModalDangerActive = ref(false);
 
-const perPage = ref(7);
+const perPage = ref(5);
 
 const currentPage = ref(0);
 
 const checkedRows = ref([]);
 
 const itemsPaginated = computed(() =>
-  items.value.slice(
+  users.value.slice(
     perPage.value * currentPage.value,
     perPage.value * (currentPage.value + 1)
   )
@@ -70,6 +73,13 @@ const checked = (isChecked, client) => {
     );
   }
 };
+
+const users = computed(() => userStore.users)
+
+onMounted(() => {
+  userStore.getAllUser();
+  // console.log('aaaa', userStore);
+})
 </script>
 
 <template>
@@ -112,40 +122,41 @@ const checked = (isChecked, client) => {
       </tr>
     </thead>
     <tbody>
-      <tr v-for="client in itemsPaginated" :key="client.id">
+      <tr v-for="client in itemsPaginated" :key="client._id">
         <TableCheckboxCell
           v-if="checkable"
           @checked="checked($event, client)"
         />
         <td class="border-b-0 lg:w-6 before:hidden">
           <UserAvatar
-            :username="client.name"
+            :username="client.username"
             class="w-24 h-24 mx-auto lg:w-6 lg:h-6"
           />
         </td>
         <td data-label="Name">
-          {{ client.name }}
+          {{ client.roles[0].role }}
         </td>
         <td data-label="Company">
-          {{ client.company }}
+          <!-- {{ client.company }} -->
         </td>
         <td data-label="City">
-          {{ client.city }}
+          <!-- {{ client.city }} -->
         </td>
         <td data-label="Progress" class="lg:w-32">
           <progress
             class="flex w-2/5 self-center lg:w-full"
             max="100"
-            :value="client.progress"
           >
-            {{ client.progress }}
+            <!-- {{ client.progress }} -->
           </progress>
         </td>
         <td data-label="Created" class="lg:w-1 whitespace-nowrap">
           <small
             class="text-gray-500 dark:text-slate-400"
             :title="client.created"
-            >{{ client.created }}</small
+            >
+            <!-- {{ client.created }} -->
+            </small
           >
         </td>
         <td class="before:hidden lg:w-1 whitespace-nowrap">
