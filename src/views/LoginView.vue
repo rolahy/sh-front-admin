@@ -51,7 +51,7 @@ const auth = useAuthStore();
               label="Login"
               @click="auth.login"
             />
-            <BaseButton color="info" outline label="Back" />
+            <BaseButton color="info" outline label="Signup" />
           </BaseButtons>
         </template>
       </CardBox>
