@@ -18,6 +18,7 @@ const userStore = useUserStore();
 const isModalActive = ref(false);
 
 const isModalDangerActive = ref(false);
+const user = ref([]);
 
 const perPage = ref(3);
 
@@ -69,18 +70,23 @@ const checked = (isChecked, client) => {
   }
 };
 
-const users = computed(() => userStore.users)
+const users = computed(() => userStore.users);
+const vieUser = (client) => {
+  isModalActive.value = true;
+  user.value = client;
+};
 
 onMounted(() => {
   userStore.getAllUser();
-  // console.log('aaaa', userStore);
 })
 </script>
 
 <template>
-  <CardBoxModal v-model="isModalActive" title="Sample modal">
-    <p>aaaaaaaLorem ipsum dolor sit amet <b>adipiscing elit</b></p>
-    <p>This is sample modal</p>
+  <CardBoxModal v-model="isModalActive" title="Détails">
+    <p>{{ user?.username }}</p>
+    <div v-for="role in user.roles" :key="role">
+      {{ role.role }}
+    </div>
   </CardBoxModal>
 
   <CardBoxModal
@@ -160,7 +166,7 @@ onMounted(() => {
               color="info"
               :icon="mdiEye"
               small
-              @click="isModalActive = true"
+              @click="vieUser(client)"
             />
             <BaseButton
               color="danger"
