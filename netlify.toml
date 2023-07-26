@@ -1,9 +1,0 @@
-[[plugins]]
-  # Installer automatiquement les dépendances du plugin local à partir de celui-ci package.json
-  package = "@netlify/plugin-local-install-core"
-[[plugins]]
-  package = "./plugins/netlify.plugin.preview-url"
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
