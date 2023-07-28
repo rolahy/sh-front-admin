@@ -11,10 +11,7 @@ export const useAuthStore = defineStore("auth", {
   actions: {
     login() {
       axios
-        .post(
-          "https://sh-api-v1.up.railway.app/auth/login",
-          this.user
-        )
+        .post("https://sh-api-v1.up.railway.app/auth/login", this.user)
         .then((res) => {
           localStorage.setItem("access_token", res.data.access_token);
           this.router.push({ name: "dashboard" });
