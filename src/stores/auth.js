@@ -12,7 +12,7 @@ export const useAuthStore = defineStore("auth", {
     login() {
       axios
         .post(
-          "https://sh-api-v1.up.railway.app/login",
+          "https://sh-api-v1.up.railway.app/auth/login",
           this.user
         )
         .then((res) => {
