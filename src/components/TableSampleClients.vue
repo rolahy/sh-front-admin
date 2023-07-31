@@ -1,6 +1,6 @@
 <script setup>
 import { computed, ref, onMounted } from "vue";
-import { mdiEye, mdiTrashCan } from "@mdi/js";
+import { mdiEye, mdiTrashCan, mdiPencil } from "@mdi/js";
 import CardBoxModal from "@/components/CardBoxModal.vue";
 import TableCheckboxCell from "@/components/TableCheckboxCell.vue";
 import BaseLevel from "@/components/BaseLevel.vue";
@@ -8,6 +8,8 @@ import BaseButtons from "@/components/BaseButtons.vue";
 import BaseButton from "@/components/BaseButton.vue";
 import UserAvatar from "@/components/UserAvatar.vue";
 import { useUserStore } from "@/stores/user";
+import FormField from "@/components/FormField.vue";
+import FormControl from "@/components/FormControl.vue";
 
 defineProps({
   checkable: Boolean,
@@ -16,6 +18,7 @@ defineProps({
 const userStore = useUserStore();
 
 const isModalActive = ref(false);
+const isModalEdit = ref(false);
 
 const isModalDangerActive = ref(false);
 const user = ref([]);
@@ -76,9 +79,14 @@ const vieUser = (client) => {
   user.value = client;
 };
 
+const editUser = (userData) => {
+  userStore.isModalEdit = true;
+  userStore.userInfo = userData;
+};
+
 onMounted(() => {
   userStore.getAllUser();
-})
+});
 </script>
 
 <template>
@@ -87,6 +95,32 @@ onMounted(() => {
     <div v-for="role in user.roles" :key="role">
       {{ role.role }}
     </div>
+  </CardBoxModal>
+
+  <CardBoxModal v-model="userStore.isModalEdit" title="Edition">
+    <FormField label="Email" help="Required. Your name">
+      <FormControl
+        v-model="userStore.userInfo.username"
+        :icon="mdiAccount"
+        name="username"
+        required
+        autocomplete="username"
+      />
+    </FormField>
+    <BaseButtons>
+      <BaseButton
+        label="Save"
+        color="info"
+        @click="userStore.updateUser(userStore.userInfo._id)"
+      />
+      <BaseButton
+        v-if="hasCancel"
+        label="Cancel"
+        color="info"
+        outline
+        @click="cancel"
+      />
+    </BaseButtons>
   </CardBoxModal>
 
   <CardBoxModal
@@ -144,10 +178,7 @@ onMounted(() => {
           <!-- {{ client.city }} -->
         </td>
         <td data-label="Progress" class="lg:w-32">
-          <progress
-            class="flex w-2/5 self-center lg:w-full"
-            max="100"
-          >
+          <progress class="flex w-2/5 self-center lg:w-full" max="100">
             <!-- {{ client.progress }} -->
           </progress>
         </td>
@@ -155,10 +186,9 @@ onMounted(() => {
           <small
             class="text-gray-500 dark:text-slate-400"
             :title="client.created"
-            >
-            <!-- {{ client.created }} -->
-            </small
           >
+            <!-- {{ client.created }} -->
+          </small>
         </td>
         <td class="before:hidden lg:w-1 whitespace-nowrap">
           <BaseButtons type="justify-start lg:justify-end" no-wrap>
@@ -167,6 +197,12 @@ onMounted(() => {
               :icon="mdiEye"
               small
               @click="vieUser(client)"
+            />
+            <BaseButton
+              color="info"
+              :icon="mdiPencil"
+              small
+              @click="editUser(client)"
             />
             <BaseButton
               color="danger"
