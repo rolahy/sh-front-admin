@@ -108,11 +108,7 @@ onMounted(() => {
       />
     </FormField>
     <BaseButtons>
-      <BaseButton
-        label="Save"
-        color="info"
-        @click="userStore.updateUser(userStore.userInfo._id)"
-      />
+      <BaseButton label="Save" color="info" @click="userStore.updateUser()" />
       <BaseButton
         v-if="hasCancel"
         label="Cancel"

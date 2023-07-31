@@ -24,9 +24,9 @@ export const useUserStore = defineStore("user", {
           console.log("error", error);
         });
     },
-    updateUser(idUser) {
+    updateUser() {
       axios
-        .put(this.url + "/" + idUser, this.userInfo, this.config)
+        .put(this.url + "/" + this.userInfo._id, this.userInfo, this.config)
         .then((res) => {
           this.isModalEdit = false;
           console.log("updated", res);
