@@ -18,7 +18,6 @@ defineProps({
 const userStore = useUserStore();
 
 const isModalActive = ref(false);
-const isModalEdit = ref(false);
 
 const isModalDangerActive = ref(false);
 const user = ref([]);
