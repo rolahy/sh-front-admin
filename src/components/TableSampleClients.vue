@@ -10,14 +10,17 @@ import UserAvatar from "@/components/UserAvatar.vue";
 import { useUserStore } from "@/stores/user";
 import FormField from "@/components/FormField.vue";
 import FormControl from "@/components/FormControl.vue";
+import { useRoleStore } from "@/stores/role";
 
 defineProps({
   checkable: Boolean,
 });
 
 const userStore = useUserStore();
+const roleStore = useRoleStore();
 
 const isModalActive = ref(false);
+const roleSelected = ref("");
 
 const isModalDangerActive = ref(false);
 const user = ref([]);
@@ -79,8 +82,20 @@ const vieUser = (client) => {
 };
 
 const editUser = (userData) => {
+  roleStore.getAllRole();
   userStore.isModalEdit = true;
   userStore.userInfo = userData;
+};
+
+const removeRole = (role) => {
+  userStore.userInfo.roles?.splice(role, 1);
+};
+
+const roles = computed(() => roleStore.roles.map((item) => item.role));
+
+const addRole = () => {
+  const role = roleStore.roles.find((role) => role.role === roleSelected.value);
+  userStore.userInfo.roles.push(role);
 };
 
 onMounted(() => {
@@ -105,6 +120,23 @@ onMounted(() => {
         required
         autocomplete="username"
       />
+    </FormField>
+    <div>Role(s):</div>
+    <div v-for="(roleUser, index) in userStore.userInfo.roles" :key="index">
+      <div class="flex justify-between">
+        <div>{{ roleUser.role }}</div>
+        <div>
+          <BaseButton
+            color="danger"
+            :icon="mdiTrashCan"
+            small
+            @click="removeRole(index)"
+          />
+        </div>
+      </div>
+    </div>
+    <FormField label="Sélectionner role">
+      <FormControl v-model="roleSelected" :options="roles" @change="addRole" />
     </FormField>
     <BaseButtons>
       <BaseButton label="Save" color="info" @click="userStore.updateUser()" />
@@ -167,7 +199,9 @@ onMounted(() => {
           {{ client.username }}
         </td>
         <td data-label="Company">
-          {{ client.roles[0].role }}
+          <div v-for="(roleUser, index) in client.roles" :key="index">
+            {{ roleUser.role }}
+          </div>
         </td>
         <td data-label="City">
           <!-- {{ client.city }} -->
