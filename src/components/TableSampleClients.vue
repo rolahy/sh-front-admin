@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, onMounted } from "vue";
+import { computed, ref, onMounted, watch } from "vue";
 import { mdiEye, mdiTrashCan, mdiPencil } from "@mdi/js";
 import CardBoxModal from "@/components/CardBoxModal.vue";
 import TableCheckboxCell from "@/components/TableCheckboxCell.vue";
@@ -96,11 +96,20 @@ const roles = computed(() => roleStore.roles.map((item) => item.role));
 const addRole = () => {
   const role = roleStore.roles.find((role) => role.role === roleSelected.value);
   userStore.userInfo.roles.push(role);
+  const rolesUpdated = roleStore.roles.filter(
+    (item) => item.role !== roleSelected.value
+  );
+  roleStore.roles = rolesUpdated;
 };
 
 onMounted(() => {
   userStore.getAllUser();
 });
+
+// watch(roleSelected, () => {
+//   const a = roleStore.roles.filter((item) => item.role !== roleSelected.value);
+//   roleStore.roles = a
+// })
 </script>
 
 <template>
