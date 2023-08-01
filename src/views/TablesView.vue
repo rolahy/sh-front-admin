@@ -16,8 +16,18 @@ import CardBoxComponentEmpty from "@/components/CardBoxComponentEmpty.vue";
 import { computed } from "vue";
 // importation store
 import { useMainStore } from "@/stores/main";
+import { useUserStore } from "@/stores/user";
+import { useRoleStore } from "@/stores/role";
 
 const mainStore = useMainStore();
+const userStore = useUserStore();
+const roleStore = useRoleStore();
+
+const addUser = () => {
+  userStore.isCreateUser = true;
+  userStore.isModalEdit = true;
+  roleStore.getAllRole();
+};
 
 const items = computed(() => mainStore.clients);
 </script>
@@ -31,13 +41,12 @@ const items = computed(() => mainStore.clients);
         main
       >
         <BaseButton
-          href="https://github.com/justboil/admin-one-vue-tailwind"
-          target="_blank"
           :icon="mdiGithub"
-          label="Star on GitHub"
+          label="Créer"
           color="contrast"
           rounded-full
           small
+          @click="addUser"
         />
       </SectionTitleLineWithButton>
       <!-- <NotificationBar color="info" :icon="mdiMonitorCellphone">

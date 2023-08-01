@@ -4,8 +4,14 @@ import axios from "axios";
 export const useUserStore = defineStore("user", {
   state: () => ({
     users: [],
-    userInfo: [],
+    userInfo: {
+      username: "",
+      roles: [],
+      password: "",
+    },
     isModalEdit: false,
+    isEditingUser: false,
+    isCreateUser: false,
     url: "https://sh-api-v1.up.railway.app/users",
     config: {
       headers: {
@@ -30,6 +36,18 @@ export const useUserStore = defineStore("user", {
         .then((res) => {
           this.isModalEdit = false;
           console.log("updated", res);
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+    },
+    createUser() {
+      axios
+        .post(this.url + "/signup", this.userInfo, this.config)
+        .then((res) => {
+          this.isModalEdit = false;
+          this.getAllUser();
+          console.log("user created", res);
         })
         .catch((error) => {
           console.log("error", error);

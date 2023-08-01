@@ -78,12 +78,16 @@ const checked = (isChecked, client) => {
 };
 
 const users = computed(() => userStore.users);
+const titleModal = computed(() =>
+  userStore.isEditingUser ? "Edition" : "Créer"
+);
 const vieUser = (client) => {
   isModalActive.value = true;
   user.value = client;
 };
 
 const editUser = (userData) => {
+  userStore.isEditingUser = true;
   roleStore.getAllRole();
   userStore.isModalEdit = true;
   userStore.userInfo = userData;
@@ -91,6 +95,12 @@ const editUser = (userData) => {
 
 const removeRole = (role) => {
   userStore.userInfo.roles?.splice(role, 1);
+};
+
+const closeModal = () => {
+  userStore.isEditingUser = false;
+  userStore.isCreateUser = false;
+  userStore.userInfo = [];
 };
 
 const rolesList = computed(() => roleStore.roles.map((item) => item.role));
@@ -104,18 +114,28 @@ const addRole = () => {
   roleStore.roles = rolesUpdated;
 };
 
+const actionSave = () => {
+  if (userStore.isEditingUser) {
+    userStore.updateUser();
+  } else {
+    userStore.createUser();
+  }
+};
+
 onMounted(() => {
   userStore.getAllUser();
 });
 
 watch(roles, () => {
-  const roleRemoveFromListRole = userStore.userInfo.roles.map((item) =>
-    item.role.toLowerCase()
-  );
-  const rolesFiltered = roleStore.roles.filter(
-    (item) => !roleRemoveFromListRole.includes(item.role.toLowerCase())
-  );
-  roleStore.roles = rolesFiltered;
+  if (userStore.isEditingUser) {
+    const roleRemoveFromListRole = userStore.userInfo.roles.map((item) =>
+      item.role.toLowerCase()
+    );
+    const rolesFiltered = roleStore.roles.filter(
+      (item) => !roleRemoveFromListRole.includes(item.role.toLowerCase())
+    );
+    roleStore.roles = rolesFiltered;
+  }
 });
 </script>
 
@@ -127,15 +147,18 @@ watch(roles, () => {
     </div>
   </CardBoxModal>
 
-  <CardBoxModal v-model="userStore.isModalEdit" title="Edition">
+  <CardBoxModal
+    v-model="userStore.isModalEdit"
+    :title="titleModal"
+    @cancel="closeModal"
+  >
     <FormField label="Email" help="Required. Your name">
       <FormControl
         v-model="userStore.userInfo.username"
         :icon="mdiAccount"
         name="username"
         required
-        autocomplete="username"
-      />
+        autocomplete="username"/>
     </FormField>
     <div>Role(s):</div>
     <div v-for="(roleUser, index) in userStore.userInfo.roles" :key="index">
@@ -158,8 +181,20 @@ watch(roles, () => {
         @change="addRole"
       />
     </FormField>
+    <FormField
+      v-if="userStore.isCreateUser"
+      label="Mot de passe"
+      help="Password"
+    >
+      <FormControl
+        v-model="userStore.userInfo.password"
+        :icon="mdiAccount"
+        name="passord"
+        required
+        autocomplete="password" />
+    </FormField>
     <BaseButtons>
-      <BaseButton label="Save" color="info" @click="userStore.updateUser()" />
+      <BaseButton label="Save" color="info" @click="actionSave" />
       <BaseButton
         v-if="hasCancel"
         label="Cancel"
@@ -184,8 +219,7 @@ watch(roles, () => {
     <span
       v-for="checkedRow in checkedRows"
       :key="checkedRow.id"
-      class="inline-block px-2 py-1 rounded-sm mr-2 text-sm bg-gray-100 dark:bg-slate-700"
-    >
+      class="inline-block px-2 py-1 rounded-sm mr-2 text-sm bg-gray-100 dark:bg-slate-700">
       {{ checkedRow.name }}
     </span>
   </div>
