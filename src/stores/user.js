@@ -35,6 +35,8 @@ export const useUserStore = defineStore("user", {
         .put(this.url + "/" + this.userInfo._id, this.userInfo, this.config)
         .then((res) => {
           this.isModalEdit = false;
+          this.isEditingUser = false;
+          this.userInfo = [];
           console.log("updated", res);
         })
         .catch((error) => {
