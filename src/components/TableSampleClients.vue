@@ -197,9 +197,6 @@ watch(roles, () => {
         <th />
         <th>Mail</th>
         <th>Role</th>
-        <th>City</th>
-        <th>Progress</th>
-        <th>Created</th>
         <th />
       </tr>
     </thead>
@@ -222,22 +219,6 @@ watch(roles, () => {
           <div v-for="(roleUser, index) in client.roles" :key="index">
             {{ roleUser.role }}
           </div>
-        </td>
-        <td data-label="City">
-          <!-- {{ client.city }} -->
-        </td>
-        <td data-label="Progress" class="lg:w-32">
-          <progress class="flex w-2/5 self-center lg:w-full" max="100">
-            <!-- {{ client.progress }} -->
-          </progress>
-        </td>
-        <td data-label="Created" class="lg:w-1 whitespace-nowrap">
-          <small
-            class="text-gray-500 dark:text-slate-400"
-            :title="client.created"
-          >
-            <!-- {{ client.created }} -->
-          </small>
         </td>
         <td class="before:hidden lg:w-1 whitespace-nowrap">
           <BaseButtons type="justify-start lg:justify-end" no-wrap>
