@@ -11,6 +11,7 @@ import { useUserStore } from "@/stores/user";
 import FormField from "@/components/FormField.vue";
 import FormControl from "@/components/FormControl.vue";
 import { useRoleStore } from "@/stores/role";
+import { storeToRefs } from "pinia";
 
 defineProps({
   checkable: Boolean,
@@ -18,6 +19,7 @@ defineProps({
 
 const userStore = useUserStore();
 const roleStore = useRoleStore();
+const { roles } = storeToRefs(roleStore);
 
 const isModalActive = ref(false);
 const roleSelected = ref("");
@@ -91,7 +93,7 @@ const removeRole = (role) => {
   userStore.userInfo.roles?.splice(role, 1);
 };
 
-const roles = computed(() => roleStore.roles.map((item) => item.role));
+const rolesList = computed(() => roleStore.roles.map((item) => item.role));
 
 const addRole = () => {
   const role = roleStore.roles.find((role) => role.role === roleSelected.value);
@@ -106,10 +108,15 @@ onMounted(() => {
   userStore.getAllUser();
 });
 
-// watch(roleSelected, () => {
-//   const a = roleStore.roles.filter((item) => item.role !== roleSelected.value);
-//   roleStore.roles = a
-// })
+watch(roles, () => {
+  const roleRemoveFromListRole = userStore.userInfo.roles.map((item) =>
+    item.role.toLowerCase()
+  );
+  const rolesFiltered = roleStore.roles.filter(
+    (item) => !roleRemoveFromListRole.includes(item.role.toLowerCase())
+  );
+  roleStore.roles = rolesFiltered;
+});
 </script>
 
 <template>
@@ -132,7 +139,7 @@ onMounted(() => {
     </FormField>
     <div>Role(s):</div>
     <div v-for="(roleUser, index) in userStore.userInfo.roles" :key="index">
-      <div class="flex justify-between">
+      <div class="flex justify-between bg-slate-800 pl-3.5 rounded-md">
         <div>{{ roleUser.role }}</div>
         <div>
           <BaseButton
@@ -145,7 +152,11 @@ onMounted(() => {
       </div>
     </div>
     <FormField label="Sélectionner role">
-      <FormControl v-model="roleSelected" :options="roles" @change="addRole" />
+      <FormControl
+        v-model="roleSelected"
+        :options="rolesList"
+        @change="addRole"
+      />
     </FormField>
     <BaseButtons>
       <BaseButton label="Save" color="info" @click="userStore.updateUser()" />
