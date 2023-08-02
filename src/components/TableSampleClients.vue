@@ -141,7 +141,6 @@ watch(userInfo, () => {
 </script>
 
 <template>
-  {{ userStore.userInfo.roles }}
   <CardBoxModal v-model="isModalActive" title="Détails">
     <p>{{ user?.username }}</p>
     <div v-for="role in user.roles" :key="role">
