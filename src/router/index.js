@@ -35,7 +35,7 @@ const routes = [
     },
     path: "/roles",
     name: "roles",
-    component: () => import("@/views/FormsView.vue"),
+    component: () => import("@/views/RoleView.vue"),
   },
   {
     meta: {
