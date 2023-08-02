@@ -163,16 +163,21 @@ watch(userInfo, () => {
         autocomplete="username"/>
     </FormField>
     <div>Role(s):</div>
-    <div v-for="(roleUser, index) in userStore.userInfo.roles" :key="index">
-      <div class="flex justify-between bg-slate-800 pl-3.5 rounded-md">
-        <div>{{ roleUser.role }}</div>
-        <div>
-          <BaseButton
-            color="danger"
-            :icon="mdiTrashCan"
-            small
-            @click="removeRole(index)"
-          />
+      <div>
+      <div
+        v-for="(roleUser, index) in userStore.userInfo.roles"
+        :key="index"
+        class="py-1">
+          <div class="flex justify-between bg-slate-800 pl-3.5 rounded-md">
+            <div>{{ roleUser.role }}</div>
+          <div>
+            <BaseButton
+                color="danger"
+              :icon="mdiTrashCan"
+              small
+              @click="removeRole(index)"
+            />
+          </div>
         </div>
       </div>
     </div>
