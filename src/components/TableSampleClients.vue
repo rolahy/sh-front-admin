@@ -161,7 +161,7 @@ watch(userInfo, () => {
         required
         autocomplete="username"/>
     </FormField>
-    <div>Role(s):</div>
+    <div class="font-bold">Role(s):</div>
       <div>
       <div
         v-for="(roleUser, index) in userStore.userInfo.roles"
