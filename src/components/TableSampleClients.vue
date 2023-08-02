@@ -27,7 +27,7 @@ const roleSelected = ref("");
 const isModalDangerActive = ref(false);
 const user = ref([]);
 
-const perPage = ref(3);
+const perPage = ref(6);
 
 const currentPage = ref(0);
 
