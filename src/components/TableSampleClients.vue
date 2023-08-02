@@ -127,7 +127,8 @@ onMounted(() => {
 });
 
 watch(roles, () => {
-  if (userStore.isEditingUser) {
+  if (userStore.isEditingUser && roleStore.roles.length > 0) {
+    console.log("ato")
     const roleRemoveFromListRole = userStore.userInfo.roles.map((item) =>
       item.role.toLowerCase()
     );
