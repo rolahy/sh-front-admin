@@ -23,10 +23,10 @@ const routes = [
   },
   {
     meta: {
-      title: "Tables",
+      title: "Utilisateurs",
     },
-    path: "/tables",
-    name: "tables",
+    path: "/users",
+    name: "users",
     component: () => import("@/views/TablesView.vue"),
   },
   {

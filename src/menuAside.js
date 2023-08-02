@@ -16,7 +16,7 @@ export default [
     label: "Dashboard",
   },
   {
-    to: "/tables",
+    to: "/users",
     label: "Utilisateurs",
     icon: mdiTable,
   },
