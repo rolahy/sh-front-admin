@@ -31,10 +31,10 @@ const routes = [
   },
   {
     meta: {
-      title: "Forms",
+      title: "Roles",
     },
-    path: "/forms",
-    name: "forms",
+    path: "/roles",
+    name: "roles",
     component: () => import("@/views/FormsView.vue"),
   },
   {

@@ -21,7 +21,7 @@ export default [
     icon: mdiTable,
   },
   {
-    to: "/forms",
+    to: "/roles",
     label: "Role",
     icon: mdiSquareEditOutline,
   },
