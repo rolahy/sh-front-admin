@@ -19,7 +19,7 @@ defineProps({
 
 const userStore = useUserStore();
 const roleStore = useRoleStore();
-const { roles } = storeToRefs(roleStore);
+const { userInfo } = storeToRefs(userStore);
 
 const isModalActive = ref(false);
 const roleSelected = ref("");
@@ -88,7 +88,6 @@ const vieUser = (client) => {
 
 const editUser = (userData) => {
   userStore.isEditingUser = true;
-  roleStore.getAllRole();
   userStore.isModalEdit = true;
   userStore.userInfo = userData;
 };
@@ -124,10 +123,11 @@ const actionSave = () => {
 
 onMounted(() => {
   userStore.getAllUser();
+  roleStore.getAllRole();
 });
 
-watch(roles, () => {
-  if (userStore.isEditingUser && roleStore.roles.length > 0) {
+watch(userInfo, () => {
+  if (userStore.isEditingUser) {
     console.log("ato")
     const roleRemoveFromListRole = userStore.userInfo.roles.map((item) =>
       item.role.toLowerCase()
@@ -141,6 +141,7 @@ watch(roles, () => {
 </script>
 
 <template>
+  {{ userStore.userInfo.roles }}
   <CardBoxModal v-model="isModalActive" title="Détails">
     <p>{{ user?.username }}</p>
     <div v-for="role in user.roles" :key="role">
