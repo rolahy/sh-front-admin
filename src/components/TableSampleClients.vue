@@ -213,12 +213,10 @@ watch(userInfo, () => {
 
   <CardBoxModal
     v-model="isModalDangerActive"
-    title="Please confirm"
+    title="Confirmer la suppression"
     button="danger"
     has-cancel
   >
-    <p>Lorem ipsum dolor sit amet <b>adipiscing elit</b></p>
-    <p>This is sample modal</p>
   </CardBoxModal>
 
   <div v-if="checkedRows.length" class="p-3 bg-gray-100/50 dark:bg-slate-800">

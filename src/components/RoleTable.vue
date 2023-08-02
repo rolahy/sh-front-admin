@@ -16,10 +16,7 @@ defineProps({
 
 const roleStore = useRoleStore();
 
-const isModalActive = ref(false);
-
 const isModalDangerActive = ref(false);
-const user = ref([]);
 
 const perPage = ref(6);
 
@@ -130,7 +127,7 @@ onMounted(() => {
 
   <CardBoxModal
     v-model="isModalDangerActive"
-    title="Confirmation la suppression"
+    title="Confirmer la suppression"
     button="danger"
     has-cancel
   >
