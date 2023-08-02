@@ -100,6 +100,7 @@ const closeModal = () => {
   userStore.isEditingUser = false;
   userStore.isCreateUser = false;
   userStore.userInfo = [];
+  roleStore.getAllRole();
 };
 
 const rolesList = computed(() => roleStore.roles.map((item) => item.role));
@@ -128,7 +129,6 @@ onMounted(() => {
 
 watch(userInfo, () => {
   if (userStore.isEditingUser) {
-    console.log("ato")
     const roleRemoveFromListRole = userStore.userInfo.roles.map((item) =>
       item.role.toLowerCase()
     );
