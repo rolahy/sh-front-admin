@@ -4,8 +4,16 @@ import axios from "axios";
 export const useTrainingStore = defineStore("training", {
   state: () => ({
     trainings: [],
-    levelInfoArray: [],
-    videoArray: [],
+    levelInfoArray: {
+      title: "",
+      videos: [],
+    },
+    videoArray: {
+      title: "",
+      description: "",
+      duration: "",
+      urlVideo: "",
+    },
     videoInfo: {
       title: "",
       description: "",
@@ -18,9 +26,7 @@ export const useTrainingStore = defineStore("training", {
       objective: "",
       levels: [],
     },
-    isModalEdit: false,
-    isEditingRole: false,
-    isCreateRole: false,
+    isCreateFormation: false,
     url: "https://sh-api-v1.up.railway.app/Trainings",
     config: {
       headers: {
