@@ -55,11 +55,19 @@ const routes = [
   },
   {
     meta: {
-      title: "Responsive layout",
+      title: "Création formation",
     },
     path: "/training",
-    name: "responsive",
+    name: "training",
     component: () => import("@/views/TrainingView.vue"),
+  },
+  {
+    meta: {
+      title: "Listes des formations",
+    },
+    path: "/training-list",
+    name: "training-list",
+    component: () => import("@/views/TrainingListView.vue"),
   },
   {
     meta: {
