@@ -31,9 +31,18 @@ export default [
     icon: mdiTelevisionGuide,
   },
   {
-    to: "/training",
     label: "Formations",
     icon: mdiResponsive,
+    menu: [
+      {
+        to: "/training-list",
+        label: "Listes",
+      },
+      {
+        to: "/training",
+        label: "Créer Formation",
+      },
+    ],
   },
   {
     label: "Videos",

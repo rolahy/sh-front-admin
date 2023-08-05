@@ -27,6 +27,7 @@ export const useTrainingStore = defineStore("training", {
       levels: [],
     },
     isCreateFormation: false,
+    isLoading: false,
     url: "https://sh-api-v1.up.railway.app/Trainings",
     config: {
       headers: {
@@ -36,6 +37,7 @@ export const useTrainingStore = defineStore("training", {
   }),
   actions: {
     getAllTraining() {
+      this.isLoading = true;
       axios
         .get(this.url, this.config)
         .then((res) => {
@@ -43,6 +45,9 @@ export const useTrainingStore = defineStore("training", {
         })
         .catch((error) => {
           console.log("error", error);
+        })
+        .finally(() => {
+          this.isLoading = false;
         });
     },
     updateTraining() {
