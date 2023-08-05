@@ -1,0 +1,68 @@
+import { defineStore } from "pinia";
+import axios from "axios";
+
+export const useTrainingStore = defineStore("training", {
+  state: () => ({
+    trainings: [],
+    levelInfoArray: [],
+    videoArray: [],
+    videoInfo: {
+      title: "",
+      description: "",
+      duration: "",
+      urlVideo: "",
+    },
+    trainingInfo: {
+      title: "",
+      description: "",
+      objective: "",
+      levels: [],
+    },
+    isModalEdit: false,
+    isEditingRole: false,
+    isCreateRole: false,
+    url: "https://sh-api-v1.up.railway.app/Trainings",
+    config: {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      },
+    },
+  }),
+  actions: {
+    getAllTraining() {
+      axios
+        .get(this.url, this.config)
+        .then((res) => {
+          this.trainings = res.data;
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+    },
+    updateTraining() {
+      axios
+        .put(this.url + "/" + this.roleInfo._id, this.roleInfo, this.config)
+        .then((res) => {
+          this.isModalEdit = false;
+          this.isEditingRole = false;
+          this.roleInfo = [];
+          console.log("updated", res);
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+    },
+    createTraining() {
+      axios
+        .post(this.url, this.trainingInfo, this.config)
+        .then((res) => {
+          this.isModalEdit = false;
+          this.getAllTraining();
+          console.log("created", res);
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+    },
+  },
+});

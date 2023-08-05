@@ -57,9 +57,9 @@ const routes = [
     meta: {
       title: "Responsive layout",
     },
-    path: "/responsive",
+    path: "/training",
     name: "responsive",
-    component: () => import("@/views/ResponsiveView.vue"),
+    component: () => import("@/views/TrainingView.vue"),
   },
   {
     meta: {

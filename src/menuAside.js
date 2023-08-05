@@ -31,7 +31,7 @@ export default [
     icon: mdiTelevisionGuide,
   },
   {
-    to: "/responsive",
+    to: "/training",
     label: "Formations",
     icon: mdiResponsive,
   },
