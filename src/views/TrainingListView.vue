@@ -16,6 +16,7 @@ onMounted(() => {
     <SectionMain>
       <!-- component -->
       <section class="bg-white dark:bg-gray-900">
+        {{ trainingStore.isLoading }}
         <div
           v-if="trainingStore.isLoading"
           class="container px-6 py-2 mx-auto animate-pulse"
@@ -45,7 +46,7 @@ onMounted(() => {
               <a href="#">
                 <img
                   class="h-60 rounded-t-lg object-cover"
-                  src="https://img.freepik.com/vecteurs-libre/gens-plats-organiques-formation-commerciale_23-2148909572.jpg"
+                  src="https://img.freepik.com/vecteurs-premium/presentation-femme-pointant-flip-chart_253349-4092.jpg"
                   alt="product image"
                 />
               </a>
