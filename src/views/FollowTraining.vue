@@ -33,9 +33,12 @@ idVideoRef.value = getYouTubeVideoId(
 const playVIdeo = (video) => {
   const id_video = getYouTubeVideoId(video.urlVideo);
   idVideoRef.value = id_video;
+  //   affectation videoInfo state dans store
+  trainingStore.videoInfo = video;
 };
 
 onMounted(() => {
+  trainingStore.videoInfo = trainings.value.levels[0]?.videos[0]; // initialisation videoInfo state dans store
   trainingStore.getAllTraining();
 });
 </script>
@@ -62,6 +65,16 @@ onMounted(() => {
                 frameborder="0"
                 allowfullscreen
               ></iframe>
+              <div class="text-gray-500 py-4">
+                <div>
+                  <span class="font-bold">Titre</span> :
+                  {{ trainingStore.videoInfo.title }}
+                </div>
+                <div>
+                  <span class="font-bold">Déscription</span> :
+                  {{ trainingStore.videoInfo.description }}
+                </div>
+              </div>
             </div>
             <div class="p-4 flex-1">
               <div
