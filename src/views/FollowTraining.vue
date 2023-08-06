@@ -46,9 +46,11 @@ onMounted(() => {
   <LayoutAuthenticated>
     <SectionMain>
       <!-- component -->
-      <section class="bg-white rounded-lg drop-shadow-lg">
+      <section class="bg-white dark:bg-slate-900/50 rounded-lg drop-shadow-lg">
         <div class="container py-2 mx-auto">
-          <div class="flex justify-center pt-3 text-gray-500 text-xl font-bold">
+          <div
+            class="flex justify-center pt-3 text-gray-500 dark:text-white text-xl font-bold"
+          >
             {{ trainings.title }}
           </div>
           <div
@@ -62,7 +64,7 @@ onMounted(() => {
                 frameborder="0"
                 allowfullscreen
               ></iframe>
-              <div class="text-gray-500 py-4">
+              <div class="text-gray-500 py-4 dark:text-white">
                 <div>
                   <span class="font-bold">Titre</span> :
                   {{ trainingStore.videoInfo.title }}
@@ -79,14 +81,14 @@ onMounted(() => {
                 :key="level._id"
                 class="text-lg mb-2"
               >
-                <h2 class="font-bold mb-2 text-gray-500">
+                <h2 class="font-bold mb-2 text-gray-500 dark:text-white">
                   {{ level.title }}
                 </h2>
                 <ul>
                   <li
                     v-for="video in level.videos"
                     :key="video._id"
-                    class="w-full ml-2 text-gray-600 border-b-2 border-neutral-300 border-opacity-100 py-2 dark:border-opacity-50 cursor-pointer"
+                    class="w-full ml-2 dark:text-gray-100 text-gray-600 border-b-2 border-neutral-300 border-opacity-100 py-2 dark:border-opacity-50 cursor-pointer"
                     @click="playVIdeo(video)"
                   >
                     <div class="flex w-full justify-between">
