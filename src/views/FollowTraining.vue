@@ -3,6 +3,8 @@ import SectionMain from "@/components/SectionMain.vue";
 import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
 import { useTrainingStore } from "@/stores/training";
 import { computed, onMounted, ref } from "vue";
+import IconRounded from "@/components/IconRounded.vue";
+import { mdiVideo } from "@mdi/js";
 
 const idVideoRef = ref("");
 
@@ -91,8 +93,9 @@ onMounted(() => {
                     class="w-full ml-2 dark:text-gray-100 text-gray-600 border-b-2 border-neutral-300 border-opacity-100 py-2 dark:border-opacity-50 cursor-pointer"
                     @click="playVIdeo(video)"
                   >
-                    <div class="flex w-full justify-between">
-                      <div>
+                    <div class="flex w-full justify-between items-center">
+                      <div class="flex items-center">
+                        <IconRounded :icon="mdiVideo" class="mr-3" bg />
                         {{ video.title }}
                       </div>
                       <div>
