@@ -8,7 +8,7 @@ import BaseButtons from "@/components/BaseButtons.vue";
 import FormField from "@/components/FormField.vue";
 import FormControl from "@/components/FormControl.vue";
 import BaseDivider from "@/components/BaseDivider.vue";
-import { mdiBallotOutline, mdiAccount, mdiGithub } from "@mdi/js";
+import { mdiBallotOutline, mdiAccount } from "@mdi/js";
 import { useTrainingStore } from "@/stores/training";
 import { ref } from "vue";
 import CardBoxModal from "@/components/CardBoxModal.vue";

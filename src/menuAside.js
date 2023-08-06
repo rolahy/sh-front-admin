@@ -4,7 +4,6 @@ import {
   mdiLock,
   mdiSquareEditOutline,
   mdiTable,
-  mdiTelevisionGuide,
   mdiResponsive,
   mdiPalette,
 } from "@mdi/js";
@@ -26,11 +25,6 @@ export default [
     icon: mdiSquareEditOutline,
   },
   {
-    to: "/ui",
-    label: "Niveaux",
-    icon: mdiTelevisionGuide,
-  },
-  {
     label: "Formations",
     icon: mdiResponsive,
     menu: [
@@ -45,7 +39,7 @@ export default [
     ],
   },
   {
-    label: "Videos",
+    label: "Type formation",
     icon: mdiPalette,
     menu: [
       {
@@ -54,7 +48,7 @@ export default [
       },
       {
         to: "/",
-        label: "Free",
+        label: "Gratuit",
       },
     ],
   },
