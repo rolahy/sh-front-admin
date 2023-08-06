@@ -93,7 +93,7 @@ onMounted(() => {
                     :key="video._id"
                     :class="`${
                       trainingStore.videoInfo.title == video.title
-                        ? 'bg-slate-600 text-white'
+                        ? 'bg-slate-600 rounded-md text-white'
                         : ''
                     }`"
                     class="w-full ml-2 dark:text-gray-100 border-b-2 border-neutral-300 border-opacity-100 py-2 dark:border-opacity-50 cursor-pointer"
