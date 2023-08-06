@@ -16,7 +16,6 @@ onMounted(() => {
     <SectionMain>
       <!-- component -->
       <section class="bg-white dark:bg-gray-900">
-        {{ trainingStore.isLoading }}
         <div
           v-if="trainingStore.isLoading"
           class="container px-6 py-2 mx-auto animate-pulse"
