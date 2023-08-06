@@ -3,8 +3,15 @@ import SectionMain from "@/components/SectionMain.vue";
 import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
 import { useTrainingStore } from "@/stores/training";
 import { onMounted } from "vue";
+import { useRouter } from "vue-router";
 
 const trainingStore = useTrainingStore();
+const router = useRouter();
+
+const followTraining = (training) => {
+  trainingStore.trainingInfo = training;
+  router.push("/follow-training");
+};
 
 onMounted(() => {
   trainingStore.getAllTraining();
@@ -40,9 +47,10 @@ onMounted(() => {
             <div
               v-for="training in trainingStore.trainings"
               :key="training._id"
-              class="w-full dark:bg-white bg-white drop-shadow-lg"
+              class="w-full dark:bg-white bg-white drop-shadow-lg cursor-pointer"
+              @click="followTraining(training)"
             >
-              <a href="#">
+              <a>
                 <img
                   class="h-52 rounded-t-lg object-cover"
                   src="https://img.freepik.com/vecteurs-premium/presentation-femme-pointant-flip-chart_253349-4092.jpg"
@@ -50,7 +58,7 @@ onMounted(() => {
                 />
               </a>
               <div class="mt-2 px-5 pb-5">
-                <a href="#">
+                <a>
                   <h5
                     class="text-xl font-semibold tracking-tight text-slate-900"
                   >
@@ -126,7 +134,6 @@ onMounted(() => {
                     >
                   </p>
                   <a
-                    href="#"
                     class="flex items-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300"
                   >
                     <svg

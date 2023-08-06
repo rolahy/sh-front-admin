@@ -71,6 +71,14 @@ const routes = [
   },
   {
     meta: {
+      title: "Listes des formations",
+    },
+    path: "/follow-training",
+    name: "follow-training",
+    component: () => import("@/views/FollowTraining.vue"),
+  },
+  {
+    meta: {
       title: "Login",
     },
     path: "/",
