@@ -39,7 +39,6 @@ const playVIdeo = (video) => {
 
 onMounted(() => {
   trainingStore.videoInfo = trainings.value.levels[0]?.videos[0]; // initialisation videoInfo state dans store
-  trainingStore.getAllTraining();
 });
 </script>
 
@@ -48,14 +47,12 @@ onMounted(() => {
     <SectionMain>
       <!-- component -->
       <section class="bg-white rounded-lg drop-shadow-lg">
-        <div class="container px-6 py-2 mx-auto">
-          <div
-            class="flex justify-center items-center text-gray-500 text-xl font-bold"
-          >
+        <div class="container py-2 mx-auto">
+          <div class="flex justify-center pt-3 text-gray-500 text-xl font-bold">
             {{ trainings.title }}
           </div>
           <div
-            class="grid grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-12 sm:grid-cols-2 xl:grid-cols-2 lg:grid-cols-3"
+            class="grid grid-cols-1 gap-8 px-8 mt-8 xl:mt-12 xl:gap-12 sm:grid-cols-2 xl:grid-cols-2 lg:grid-cols-3"
           >
             <div class="drop-shadow-lg p-4 flex-1">
               <iframe
