@@ -15,7 +15,7 @@ onMounted(() => {
   <LayoutAuthenticated>
     <SectionMain>
       <!-- component -->
-      <section class="bg-white dark:bg-gray-900">
+      <section class="bg-white rounded-lg drop-shadow-lg">
         <div
           v-if="trainingStore.isLoading"
           class="container px-6 py-2 mx-auto animate-pulse"
@@ -25,35 +25,31 @@ onMounted(() => {
           >
             <div v-for="a in 6" :key="a" class="w-full">
               <div
-                class="w-full h-64 bg-gray-300 rounded-lg dark:bg-gray-600"
+                class="w-full h-64 bg-gray-300 rounded-lg dark:bg-gray-300"
               ></div>
               <p
-                class="w-24 h-2 mt-4 bg-gray-200 rounded-lg dark:bg-gray-700"
+                class="w-24 h-2 mt-4 bg-gray-200 rounded-lg dark:bg-gray-300"
               ></p>
             </div>
           </div>
         </div>
         <div v-else class="container px-6 py-2 mx-auto">
           <div
-            class="grid grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-12 sm:grid-cols-2 xl:grid-cols-3 lg:grid-cols-3"
+            class="grid grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-12 sm:grid-cols-2 xl:grid-cols-3 lg:grid-cols-3 mb-12"
           >
             <div
               v-for="training in trainingStore.trainings"
               :key="training._id"
-              class="w-full dark:bg-white"
+              class="w-full dark:bg-white bg-white drop-shadow-lg"
             >
               <a href="#">
                 <img
-                  class="h-60 rounded-t-lg object-cover"
+                  class="h-52 rounded-t-lg object-cover"
                   src="https://img.freepik.com/vecteurs-premium/presentation-femme-pointant-flip-chart_253349-4092.jpg"
-                  alt="product image"
+                  alt="formation image"
                 />
               </a>
-              <span
-                class="absolute top-0 left-0 w-28 translate-y-4 -translate-x-6 -rotate-45 bg-black text-center text-sm text-white"
-                >Sale</span
-              >
-              <div class="mt-4 px-5 pb-5">
+              <div class="mt-2 px-5 pb-5">
                 <a href="#">
                   <h5
                     class="text-xl font-semibold tracking-tight text-slate-900"
