@@ -77,6 +77,7 @@ onMounted(() => {
                 </div>
               </div>
             </div>
+            <!-- <BaseDivider /> -->
             <div class="p-4 flex-1">
               <div
                 v-for="level in trainings.levels"
@@ -90,7 +91,12 @@ onMounted(() => {
                   <li
                     v-for="video in level.videos"
                     :key="video._id"
-                    class="w-full ml-2 dark:text-gray-100 text-gray-600 border-b-2 border-neutral-300 border-opacity-100 py-2 dark:border-opacity-50 cursor-pointer"
+                    :class="`${
+                      trainingStore.videoInfo.title == video.title
+                        ? 'bg-slate-600 text-white'
+                        : ''
+                    }`"
+                    class="w-full ml-2 dark:text-gray-100 border-b-2 border-neutral-300 border-opacity-100 py-2 dark:border-opacity-50 cursor-pointer"
                     @click="playVIdeo(video)"
                   >
                     <div class="flex w-full justify-between items-center">
