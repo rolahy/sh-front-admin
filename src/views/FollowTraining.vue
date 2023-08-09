@@ -66,6 +66,16 @@ onMounted(() => {
                 frameborder="0"
                 allowfullscreen
               ></iframe>
+              <!-- <video
+                id="ember4348_html5_api"
+                class="vjs-tech"
+                tabindex="-1"
+                role="application"
+                preload="metadata"
+                poster="https://media.licdn.com/dms/image/D4E05AQFvTRPCD0cGhw/videocover-high/0/1691296279125?e=1692172800&amp;v=beta&amp;t=OzmHwJrd7cK93zyjbn-MW5keKvcH6VEtKuvEw6DdsEg"
+                src="https://dms.licdn.com/playlist/vid/D4E05AQFvTRPCD0cGhw/feedshare-ambry-analyzed_servable_progressive_video/0/1691296278558?e=1692172800&v=beta&t=krUSpUULQmhNi8E4jzlCu3taCUAeyMbQzP1nn1tCgLI"
+                autoplay="autoplay"
+              ></video> -->
               <div class="text-gray-500 py-4 dark:text-white">
                 <div>
                   <span class="font-bold">Titre</span> :
