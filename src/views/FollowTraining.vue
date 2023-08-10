@@ -43,7 +43,8 @@ const playVIdeo = (video) => {
 
 const router = useRouter();
 
-const tryQuiz = () => {
+const tryQuiz = (level) => {
+  trainingStore.levelInfoArray = level;
   router.push("/try-quiz");
 };
 
@@ -135,7 +136,7 @@ onMounted(() => {
                   :rounded-full="true"
                   :small="buttonsSmall"
                   :outline="true"
-                  @click="tryQuiz"
+                  @click="tryQuiz(level)"
                 />
               </div>
             </div>

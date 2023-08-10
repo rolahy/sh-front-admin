@@ -29,7 +29,7 @@ const customElementsForm = reactive({
                 <div>
                   <p>
                     <span class="font-bold">Quizz</span>:
-                    {{ trainingStore.trainingInfo.levels[1].title }}
+                    {{ trainingStore.levelInfoArray.title }}
                   </p>
                 </div>
                 <div>
@@ -40,8 +40,7 @@ const customElementsForm = reactive({
                 </div>
 
                 <div
-                  v-for="quiz in trainingStore.trainingInfo.levels[1].quiz
-                    .questions"
+                  v-for="quiz in trainingStore.levelInfoArray.quiz.questions"
                   :key="quiz"
                   class="text-base leading-7"
                 >
