@@ -1,6 +1,15 @@
 <script setup>
 import SectionMain from "@/components/SectionMain.vue";
 import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
+import { useTrainingStore } from "@/stores/training";
+import FormCheckRadioGroup from "@/components/FormCheckRadioGroup.vue";
+import FormField from "@/components/FormField.vue";
+import { reactive } from "vue";
+
+const trainingStore = useTrainingStore();
+const customElementsForm = reactive({
+  radio: null,
+});
 </script>
 
 <template>
@@ -8,6 +17,7 @@ import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
     <SectionMain>
       <!-- component -->
       <section class="bg-white dark:bg-slate-900/50 rounded-lg drop-shadow-lg">
+        <!-- {{ customElementsForm.radio }} index choix -->
         <div class="container py-2 mx-auto">
           <!-- component -->
           <!-- This is an example component -->
@@ -18,75 +28,39 @@ import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
               class="w-full max-w-lg px-10 py-8 mx-auto bg-white rounded-lg shadow-xl"
             >
               <div class="max-w-md mx-auto space-y-6">
-                <img
-                  src="https://tailwindcomponents.com/svg/logo-color.svg"
-                  class="h-8"
-                />
-
                 <p class="text-gray-600">
-                  Open source Tailwind UI components and templates to bootstrap
-                  your new apps, projects or landing sites!
+                  Quizz {{ trainingStore.trainingInfo.levels[1].title }}
                 </p>
 
-                <div class="text-base leading-7">
+                <div
+                  v-for="quiz in trainingStore.trainingInfo.levels[1].quiz
+                    .questions"
+                  :key="quiz"
+                  class="text-base leading-7"
+                >
                   <p class="font-medium text-gray-700">
-                    Looking For Free premium components?
+                    {{ quiz.question }}
                   </p>
+                  <FormField>
+                    <FormCheckRadioGroup
+                      v-model="customElementsForm.radio"
+                      name="sample-radio"
+                      type="radio"
+                      :options="quiz.choices"
+                    />
+                  </FormField>
 
-                  <p>
+                  <!-- <p>
                     <a
+                      v-for="choise in quiz.choices"
+                      :key="choise"
                       target="_blank"
                       href="https://tailwindcomponents.com/awesome"
                       class="text-teal-400 hover:underline"
-                      >Check out our awesome components →</a
+                      >{{ choise }}</a
                     >
-                  </p>
+                  </p> -->
                 </div>
-
-                <div class="text-base leading-7">
-                  <p class="font-medium text-gray-700">
-                    Looking for premium themes and landing pages?
-                  </p>
-
-                  <p>
-                    <a
-                      target="_blank"
-                      href="https://tailwindcomponents.com/promotes"
-                      class="text-teal-400 hover:underline"
-                      >Check out our premium page →</a
-                    >
-                  </p>
-                </div>
-
-                <div class="text-base leading-7">
-                  <p class="font-medium text-gray-700">
-                    Looking for Awesome cheatsheet for Tailwind CSS?
-                  </p>
-
-                  <p>
-                    <a
-                      target="_blank"
-                      href="https://tailwindcomponents.com/cheatsheet"
-                      class="text-teal-400 hover:underline"
-                      >Check out our cheatsheet →</a
-                    >
-                  </p>
-                </div>
-
-                <div class="text-base leading-7">
-                  <p class="font-medium text-gray-700">
-                    Want to dig deeper into Tailwind CSS?
-                  </p>
-                  <p>
-                    <a
-                      target="_blank"
-                      href="https://tailwindcss.com/docs"
-                      class="text-teal-400 hover:underline"
-                      >Read the docs →</a
-                    >
-                  </p>
-                </div>
-
                 <a
                   target="_blank"
                   href="https://tailwindcomponents.com"
