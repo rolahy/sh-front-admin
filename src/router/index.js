@@ -79,6 +79,14 @@ const routes = [
   },
   {
     meta: {
+      title: "Quiz",
+    },
+    path: "/try-quiz",
+    name: "try-quiz",
+    component: () => import("@/views/TryQuiz.vue"),
+  },
+  {
+    meta: {
       title: "Login",
     },
     path: "/",

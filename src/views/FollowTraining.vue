@@ -5,6 +5,8 @@ import { useTrainingStore } from "@/stores/training";
 import { computed, onMounted, ref } from "vue";
 import IconRounded from "@/components/IconRounded.vue";
 import { mdiVideo } from "@mdi/js";
+import BaseButton from "@/components/BaseButton.vue";
+import { useRouter } from "vue-router";
 
 const idVideoRef = ref("");
 
@@ -37,6 +39,12 @@ const playVIdeo = (video) => {
   idVideoRef.value = id_video;
   //   affectation videoInfo state dans store
   trainingStore.videoInfo = video;
+};
+
+const router = useRouter();
+
+const tryQuiz = () => {
+  router.push("/try-quiz");
 };
 
 onMounted(() => {
@@ -120,6 +128,15 @@ onMounted(() => {
                     </div>
                   </li>
                 </ul>
+                <BaseButton
+                  class="mt-2"
+                  label="Quiz"
+                  color="info"
+                  :rounded-full="true"
+                  :small="buttonsSmall"
+                  :outline="true"
+                  @click="tryQuiz"
+                />
               </div>
             </div>
           </div>
