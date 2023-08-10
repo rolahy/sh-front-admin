@@ -1,55 +1,6 @@
 <script setup>
 import SectionMain from "@/components/SectionMain.vue";
 import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
-import { useTrainingStore } from "@/stores/training";
-import { computed, onMounted, ref } from "vue";
-import IconRounded from "@/components/IconRounded.vue";
-import { mdiVideo } from "@mdi/js";
-import BaseButton from "@/components/BaseButton.vue";
-import { useRouter } from "vue-router";
-
-const idVideoRef = ref("");
-
-const trainingStore = useTrainingStore();
-const trainings = computed(() => trainingStore.trainingInfo);
-
-const getYouTubeVideoId = (url) => {
-  if (trainings.value.levels[0]?.videos[0].urlVideo) {
-    // Expression régulière pour extraire l'ID de la vidéo à partir de l'URL YouTube
-    const regExp =
-      /^(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu.be\/)([a-zA-Z0-9_-]{11})/;
-    const match = url.match(regExp);
-
-    if (match && match[1]) {
-      return match[1];
-    } else {
-      // Gérer le cas où l'URL n'est pas valide
-      console.error("URL YouTube invalide !");
-      return null;
-    }
-  }
-};
-
-idVideoRef.value = getYouTubeVideoId(
-  trainings.value.levels[0]?.videos[0].urlVideo
-);
-
-const playVIdeo = (video) => {
-  const id_video = getYouTubeVideoId(video.urlVideo);
-  idVideoRef.value = id_video;
-  //   affectation videoInfo state dans store
-  trainingStore.videoInfo = video;
-};
-
-const router = useRouter();
-
-const tryQuiz = () => {
-  router.push("/try-quiz");
-};
-
-onMounted(() => {
-  trainingStore.videoInfo = trainings.value.levels[0]?.videos[0]; // initialisation videoInfo state dans store
-});
 </script>
 
 <template>
