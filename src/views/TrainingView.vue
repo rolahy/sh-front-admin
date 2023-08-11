@@ -16,9 +16,16 @@ import CardBoxModal from "@/components/CardBoxModal.vue";
 const trainingStore = useTrainingStore();
 const levels = ref(0);
 const levelWithVideo = ref([]);
+const indexLevelsInTrainingInfo = ref(null);
 
 const createVideoAndLevel = () => {
   trainingStore.isCreateFormation = true;
+};
+
+const createQuizForLevel = (index) => {
+  indexLevelsInTrainingInfo.value = index;
+  console.log("index", index);
+  trainingStore.isCreateQuiz = true;
 };
 
 const addLevelVideo = () => {
@@ -48,6 +55,30 @@ function addVideoToLevel() {
 const closeModal = () => {
   //
 };
+const createChoiceResponse = () => {
+  const choiceCopy = Object.assign(trainingStore.choiceInfo);
+  trainingStore.questionInfo.choices.push(choiceCopy);
+  trainingStore.choiceInfo = "";
+  console.log("Creation choix de la réponse");
+};
+
+const createQuestion = () => {
+  trainingStore.quizInfo.questions.push(trainingStore.questionInfo);
+  // initialisation input quiz
+  trainingStore.questionInfo = {
+    question: "",
+    choices: [],
+    correctChoice: null,
+  };
+};
+
+const addQuestionsToQuiz = () => {
+  const levelsInTrainingInfo = trainingStore.trainingInfo.levels[indexLevelsInTrainingInfo.value];
+  levelsInTrainingInfo.quiz = trainingStore.quizInfo.questions;
+  trainingStore.isCreateQuiz = false;
+  //initialisation trainingStore.quizInfo.questions
+  trainingStore.quizInfo.questions = [];
+};
 </script>
 
 <template>
@@ -55,6 +86,16 @@ const closeModal = () => {
     <!-- tyyy{{ aaa }}<br/>
     {{ trainingStore.levelInfoArray }}<br/>
     {{ trainingStore.videoArray }} -->
+    <!-- trainingStore.questionInfo no pushena ao anaty quizInfo.questions -->
+    <!-- question ray{{ trainingStore.questionInfo }}
+    <div>
+      tableau questions quizInfo questions
+      {{ trainingStore.quizInfo.questions }}
+    </div>
+    <div>
+      trainingStore.trainingInfo.levels {{ trainingStore.trainingInfo.levels }}
+    </div> -->
+    <!-- Niveau et video moadal -->
     <CardBoxModal
       v-model="trainingStore.isCreateFormation"
       :title="titleModal"
@@ -116,6 +157,70 @@ const closeModal = () => {
         />
       </BaseButtons>
     </CardBoxModal>
+    <!-- Quiz moadal -->
+    <CardBoxModal
+      v-model="trainingStore.isCreateQuiz"
+      :title="titleModal"
+      @cancel="closeModal"
+    >
+      <FormField class="my-3">
+        <div class="font-bold">Informations Quiz:</div>
+        <FormControl
+          v-model="trainingStore.questionInfo.question"
+          :icon="mdiAccount"
+          placeholder="Question"
+        />
+        <div
+          v-for="(choice, index) in trainingStore.questionInfo.choices"
+          :key="index"
+        >
+          <p>{{ choice }} Index de la réponse est {{ index }}</p>
+        </div>
+        <FormControl
+          v-model="trainingStore.choiceInfo"
+          :icon="mdiAccount"
+          placeholder="Choix de la réponse"
+        />
+        <BaseButton
+          label="Créer choix"
+          color="success"
+          :rounded-full="true"
+          :small="buttonsSmall"
+          :outline="true"
+          @click="createChoiceResponse"
+        />
+        <FormControl
+          v-model="trainingStore.questionInfo.correctChoice"
+          :icon="mdiAccount"
+          placeholder="Index de la réponse"
+        />
+      </FormField>
+      <BaseButtons>
+        <BaseButton
+          label="Enregistrer"
+          color="info"
+          :rounded-full="true"
+          :small="buttonsSmall"
+          :outline="true"
+          @click="addQuestionsToQuiz"
+        />
+        <BaseButton
+          class="mb-2"
+          color="lightDark"
+          label="Créer quéstion"
+          :small="buttonsSmall"
+          :rounded-full="true"
+          @click="createQuestion"
+        />
+        <BaseButton
+          v-if="hasCancel"
+          label="Cancel"
+          color="info"
+          outline
+          @click="cancel"
+        />
+      </BaseButtons>
+    </CardBoxModal>
     <SectionMain>
       <SectionTitleLineWithButton
         :icon="mdiBallotOutline"
@@ -157,14 +262,26 @@ const closeModal = () => {
           <div class="font-bold">Niveaux avec videos:</div>
           <div>
             <div
-              v-for="(niveauVideo, index) in levelWithVideo"
+              v-for="(niveauVideo, index) in trainingStore.trainingInfo.levels"
               :key="index"
               class="py-1"
             >
-              <div class="flex justify-between bg-slate-800 pl-3.5 rounded-md">
+              <div
+                class="flex justify-between items-center bg-gray-100 dark:bg-slate-800 pl-3.5 rounded-2xl"
+              >
                 <div>
                   {{ niveauVideo.title }} avec
                   {{ niveauVideo.videos.length }} vidéos
+                </div>
+                <div>
+                  <BaseButton
+                    label="Créer quiz"
+                    color="success"
+                    :rounded-full="true"
+                    :small="buttonsSmall"
+                    :outline="true"
+                    @click="createQuizForLevel(index)"
+                  />
                 </div>
               </div>
             </div>

@@ -4,6 +4,15 @@ import axios from "axios";
 export const useTrainingStore = defineStore("training", {
   state: () => ({
     trainings: [],
+    quizInfo: {
+      questions: [],
+    },
+    choiceInfo: "",
+    questionInfo: {
+      question: "",
+      choices: [],
+      correctChoice: null,
+    },
     levelInfoArray: {
       title: "",
       videos: [],
@@ -28,6 +37,7 @@ export const useTrainingStore = defineStore("training", {
       levels: [],
     },
     isCreateFormation: false,
+    isCreateQuiz: false,
     isLoading: false,
     url: "https://sh-api-v1.up.railway.app/Trainings",
     config: {
