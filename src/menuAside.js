@@ -52,14 +52,14 @@ export default [
       },
     ],
   },
-  {
-    to: "/profile",
-    label: "Quiz",
-    icon: mdiAccountCircle,
-  },
-  {
-    to: "/responsive",
-    label: "Questions",
-    icon: mdiLock,
-  },
+  // {
+  //   to: "/profile",
+  //   label: "Quiz",
+  //   icon: mdiAccountCircle,
+  // },
+  // {
+  //   to: "/responsive",
+  //   label: "Questions",
+  //   icon: mdiLock,
+  // },
 ];
