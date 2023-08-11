@@ -8,7 +8,7 @@ import BaseButtons from "@/components/BaseButtons.vue";
 import FormField from "@/components/FormField.vue";
 import FormControl from "@/components/FormControl.vue";
 import BaseDivider from "@/components/BaseDivider.vue";
-import { mdiBallotOutline, mdiAccount } from "@mdi/js";
+import { mdiBallotOutline, mdiAccount, mdiArchivePlus } from "@mdi/js";
 import { useTrainingStore } from "@/stores/training";
 import { ref } from "vue";
 import CardBoxModal from "@/components/CardBoxModal.vue";
@@ -179,28 +179,38 @@ const addQuestionsToQuiz = () => {
           placeholder="Question"
         />
         <div
+          v-if="trainingStore.questionInfo.choices.length > 0"
+          class="font-bold"
+        >
+          Listes des choix réponse:
+        </div>
+        <div
           v-for="(choice, index) in trainingStore.questionInfo.choices"
           :key="index"
         >
-          <p>{{ choice }} Index de la réponse est {{ index }}</p>
+          <p>
+            <span class="font-bold">{{ choice }}</span> index
+            <span class="font-bold">{{ index }}</span>
+          </p>
         </div>
-        <FormControl
-          v-model="trainingStore.choiceInfo"
-          :icon="mdiAccount"
-          placeholder="Choix de la réponse"
-        />
-        <BaseButton
-          label="Créer choix"
-          color="success"
-          :rounded-full="true"
-          :small="buttonsSmall"
-          :outline="true"
-          @click="createChoiceResponse"
-        />
+        <div class="flex justify-between">
+          <FormControl
+            v-model="trainingStore.choiceInfo"
+            class="w-full mr-2"
+            :icon="mdiAccount"
+            placeholder="Choix de la réponse"
+          />
+          <BaseButton
+            :icon="mdiArchivePlus"
+            color="success"
+            :small="buttonsSmall"
+            @click="createChoiceResponse"
+          />
+        </div>
         <FormControl
           v-model="trainingStore.questionInfo.correctChoice"
           :icon="mdiAccount"
-          placeholder="Index de la réponse"
+          placeholder="Index de la réponse correcte"
         />
       </FormField>
       <BaseButtons>
