@@ -16,7 +16,9 @@ export const useTrainingStore = defineStore("training", {
     levelInfoArray: {
       title: "",
       videos: [],
-      quiz: null,
+      quiz: {
+        questions: [],
+      },
     },
     videoArray: {
       title: "",

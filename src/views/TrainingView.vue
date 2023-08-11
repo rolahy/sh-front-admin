@@ -36,6 +36,9 @@ const addLevelVideo = () => {
   trainingStore.levelInfoArray = {
     title: "",
     videos: [],
+    quiz: {
+      questions: [],
+    },
   };
   // afecation niveaux au nivaux d'une formation
   trainingStore.trainingInfo.levels = levelWithVideo.value;
@@ -73,8 +76,10 @@ const createQuestion = () => {
 };
 
 const addQuestionsToQuiz = () => {
-  const levelsInTrainingInfo = trainingStore.trainingInfo.levels[indexLevelsInTrainingInfo.value];
-  levelsInTrainingInfo.quiz = trainingStore.quizInfo.questions;
+  const levelsInTrainingInfo =
+    trainingStore.trainingInfo.levels[indexLevelsInTrainingInfo.value];
+  console.log("itoe", levelsInTrainingInfo);
+  levelsInTrainingInfo.quiz.questions = trainingStore.quizInfo.questions;
   trainingStore.isCreateQuiz = false;
   //initialisation trainingStore.quizInfo.questions
   trainingStore.quizInfo.questions = [];
@@ -96,6 +101,9 @@ const addQuestionsToQuiz = () => {
       trainingStore.trainingInfo.levels {{ trainingStore.trainingInfo.levels }}
     </div> -->
     <!-- Niveau et video moadal -->
+    <!-- <div>
+      trainingStore.trainingInfo.levels {{ trainingStore.trainingInfo.levels }}
+    </div> -->
     <CardBoxModal
       v-model="trainingStore.isCreateFormation"
       :title="titleModal"
