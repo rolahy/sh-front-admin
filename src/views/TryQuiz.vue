@@ -2,14 +2,15 @@
 import SectionMain from "@/components/SectionMain.vue";
 import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
 import { useTrainingStore } from "@/stores/training";
-import FormCheckRadioGroup from "@/components/FormCheckRadioGroup.vue";
-import FormField from "@/components/FormField.vue";
-import { reactive } from "vue";
+// import FormCheckRadioGroup from "@/components/FormCheckRadioGroup.vue";
+// import FormField from "@/components/FormField.vue";
+import { ref } from "vue";
 
 const trainingStore = useTrainingStore();
-const customElementsForm = reactive({
-  radio: null,
-});
+const responseQuiz = ref([]);
+const sendResponseQuiz = () => {
+  alert(responseQuiz.value);
+};
 </script>
 
 <template>
@@ -25,55 +26,52 @@ const customElementsForm = reactive({
           <!-- This is an example component -->
           <div class="flex">
             <div class="w-full px-10 py-8 mx-auto">
-              <div class="mx-auto space-y-6 dark:text-white text-gray-600">
+              <div class="mx-auto space-y-6 dark:text-gray-300 text-gray-600">
                 <div>
                   <p>
-                    <span class="font-bold">Quizz</span>:
+                    <span class="font-bold text-lg">Quizz</span>:
                     {{ trainingStore.levelInfoArray.title }}
                   </p>
                 </div>
                 <div>
                   <p>
-                    <span class="font-bold">Formation</span>:
+                    <span class="font-bold text-lg">Formation</span>:
                     {{ trainingStore.trainingInfo.title }}
                   </p>
                 </div>
-
+                <!-- Response {{ responseQuiz }} -->
                 <div
-                  v-for="quiz in trainingStore.levelInfoArray.quiz.questions"
-                  :key="quiz"
-                  class="text-base leading-7"
+                  v-for="(question, index) in trainingStore.levelInfoArray.quiz
+                    ?.questions"
+                  :key="question._id"
                 >
-                  <p class="font-medium">
-                    {{ quiz.question }}
-                  </p>
-                  <FormField>
-                    <FormCheckRadioGroup
-                      v-model="customElementsForm.radio"
-                      name="sample-radio"
-                      type="radio"
-                      :options="quiz.choices"
-                    />
-                  </FormField>
-
-                  <!-- <p>
-                    <a
-                      v-for="choise in quiz.choices"
-                      :key="choise"
-                      target="_blank"
-                      href="https://tailwindcomponents.com/awesome"
-                      class="text-teal-400 hover:underline"
-                      >{{ choise }}</a
+                  <h3 class="font-bold text-lg">{{ question.question }}</h3>
+                  <div class="">
+                    <div
+                      v-for="(choice, choiceIndex) in question.choices"
+                      :key="choiceIndex"
                     >
-                  </p> -->
+                      <input
+                        :id="`choice-${index}-${choiceIndex}`"
+                        v-model="responseQuiz[index]"
+                        type="radio"
+                        :name="`question-${index}`"
+                        :value="choiceIndex"
+                      />
+                      <label
+                        class="ml-3"
+                        :for="`choice-${index}-${choiceIndex}`"
+                        >{{ choice }}</label
+                      >
+                    </div>
+                  </div>
                 </div>
-                <!-- <a
-                  target="_blank"
-                  href="https://tailwindcomponents.com"
-                  class="block w-full px-4 py-2 font-medium tracking-wide text-center text-white capitalize transition-colors duration-200 transform bg-teal-400 rounded-md hover:bg-teal-500 focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80"
+                <button
+                  class="block w-full px-4 py-2 font-medium tracking-wide text-center text-white capitalize transition-colors duration-200 transform bg-blue-600 rounded-md hover:bg-teal-500 focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80"
+                  @click="sendResponseQuiz"
                 >
-                  Go Back to Tailwind Components
-                </a> -->
+                  Envoyer la réponse
+                </button>
               </div>
             </div>
           </div>
