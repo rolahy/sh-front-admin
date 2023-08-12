@@ -2,8 +2,6 @@
 import SectionMain from "@/components/SectionMain.vue";
 import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
 import { useTrainingStore } from "@/stores/training";
-// import FormCheckRadioGroup from "@/components/FormCheckRadioGroup.vue";
-// import FormField from "@/components/FormField.vue";
 import { ref } from "vue";
 
 const trainingStore = useTrainingStore();
@@ -54,6 +52,7 @@ const sendResponseQuiz = () => {
                       <input
                         :id="`choice-${index}-${choiceIndex}`"
                         v-model="responseQuiz[index]"
+                        class="cursor-pointer"
                         type="radio"
                         :name="`question-${index}`"
                         :value="choiceIndex"
@@ -67,7 +66,7 @@ const sendResponseQuiz = () => {
                   </div>
                 </div>
                 <button
-                  class="block w-full px-4 py-2 font-medium tracking-wide text-center text-white capitalize transition-colors duration-200 transform bg-blue-600 rounded-md hover:bg-teal-500 focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80"
+                  class="block w-1/4 px-4 py-2 font-medium tracking-wide text-center text-white capitalize transition-colors duration-200 transform bg-blue-600 rounded-md hover:bg-teal-500 focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80"
                   @click="sendResponseQuiz"
                 >
                   Envoyer la réponse
