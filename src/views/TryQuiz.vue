@@ -3,11 +3,34 @@ import SectionMain from "@/components/SectionMain.vue";
 import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
 import { useTrainingStore } from "@/stores/training";
 import { ref } from "vue";
+import BaseButton from "@/components/BaseButton.vue";
 
 const trainingStore = useTrainingStore();
 const responseQuiz = ref([]);
+const score = ref(null);
 const sendResponseQuiz = () => {
-  alert(responseQuiz.value);
+  let correctResponses = 0;
+
+  // Itération sur les questions
+  for (
+    let i = 0;
+    i < trainingStore.levelInfoArray.quiz?.questions.length;
+    i++
+  ) {
+    const question = trainingStore.levelInfoArray.quiz?.questions[i];
+    const selectedResponse = responseQuiz.value[i];
+
+    if (
+      selectedResponse !== null &&
+      selectedResponse === question.correctChoice
+    ) {
+      correctResponses++;
+    }
+  }
+
+  // Calcul du score en pourcentage
+  const totalQuestions = trainingStore.levelInfoArray.quiz?.questions.length;
+  score.value = (correctResponses / totalQuestions) * 100 + " %";
 };
 </script>
 
@@ -37,7 +60,10 @@ const sendResponseQuiz = () => {
                     {{ trainingStore.trainingInfo.title }}
                   </p>
                 </div>
-                <!-- Response {{ responseQuiz }} -->
+                <div v-if="score">
+                  <span class="font-bold text-lg">Scrore</span>
+                  : {{ score }}
+                </div>
                 <div
                   v-for="(question, index) in trainingStore.levelInfoArray.quiz
                     ?.questions"
@@ -65,12 +91,15 @@ const sendResponseQuiz = () => {
                     </div>
                   </div>
                 </div>
-                <button
-                  class="block w-1/4 px-4 py-2 font-medium tracking-wide text-center text-white capitalize transition-colors duration-200 transform bg-blue-600 rounded-md hover:bg-teal-500 focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80"
+                <BaseButton
+                  class="mt-2"
+                  label="Envoyer la réponse"
+                  color="info"
+                  :rounded-full="true"
+                  :small="buttonsSmall"
+                  :outline="true"
                   @click="sendResponseQuiz"
-                >
-                  Envoyer la réponse
-                </button>
+                />
               </div>
             </div>
           </div>
