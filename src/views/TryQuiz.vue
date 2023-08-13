@@ -2,7 +2,7 @@
 import SectionMain from "@/components/SectionMain.vue";
 import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
 import { useTrainingStore } from "@/stores/training";
-import { ref } from "vue";
+import { computed, ref, onUnmounted } from "vue";
 import BaseButton from "@/components/BaseButton.vue";
 
 const trainingStore = useTrainingStore();
@@ -32,6 +32,40 @@ const sendResponseQuiz = () => {
   const totalQuestions = trainingStore.levelInfoArray.quiz?.questions.length;
   score.value = (correctResponses / totalQuestions) * 100 + " %";
 };
+
+let totalSeconds = ref(
+  trainingStore.levelInfoArray.quiz?.questions.length * 60
+);
+const countdown = ref(null);
+const isQuizStart = ref(false);
+const minutes = ref(0);
+const seconds = ref(0);
+
+const updateCountdown = () => {
+  if (totalSeconds.value > 0) {
+    minutes.value = Math.floor(totalSeconds.value / 60);
+    seconds.value = totalSeconds.value % 60;
+    totalSeconds.value--;
+
+    if (totalSeconds.value == 0) {
+      sendResponseQuiz();
+      console.log("Compte à rebours terminé !");
+    }
+  }
+};
+
+const formattedTime = computed(
+  () => `${minutes.value}:${seconds.value < 10 ? "0" : ""}${seconds.value}`
+);
+
+const startCountdown = () => {
+  isQuizStart.value = true;
+  countdown.value = setInterval(updateCountdown, 1000);
+};
+
+onUnmounted(() => {
+  clearInterval(countdown.value);
+});
 </script>
 
 <template>
@@ -61,44 +95,59 @@ const sendResponseQuiz = () => {
                   </p>
                 </div>
                 <div v-if="score">
-                  <span class="font-bold text-lg">Scrore</span>
+                  <span class="font-bold text-lg">Score</span>
                   : {{ score }}
                 </div>
-                <div
-                  v-for="(question, index) in trainingStore.levelInfoArray.quiz
-                    ?.questions"
-                  :key="question._id"
-                >
-                  <h3 class="font-bold text-lg">{{ question.question }}</h3>
-                  <div class="">
-                    <div
-                      v-for="(choice, choiceIndex) in question.choices"
-                      :key="choiceIndex"
-                    >
-                      <input
-                        :id="`choice-${index}-${choiceIndex}`"
-                        v-model="responseQuiz[index]"
-                        class="cursor-pointer"
-                        type="radio"
-                        :name="`question-${index}`"
-                        :value="choiceIndex"
-                      />
-                      <label
-                        class="ml-3"
-                        :for="`choice-${index}-${choiceIndex}`"
-                        >{{ choice }}</label
+                <div v-if="isQuizStart">
+                  <div
+                    v-for="(question, index) in trainingStore.levelInfoArray
+                      .quiz?.questions"
+                    :key="question._id"
+                  >
+                    <h3 class="font-bold text-lg">{{ question.question }}</h3>
+                    <div class="">
+                      <div
+                        v-for="(choice, choiceIndex) in question.choices"
+                        :key="choiceIndex"
                       >
+                        <input
+                          :id="`choice-${index}-${choiceIndex}`"
+                          v-model="responseQuiz[index]"
+                          class="cursor-pointer"
+                          type="radio"
+                          :name="`question-${index}`"
+                          :value="choiceIndex"
+                        />
+                        <label
+                          class="ml-3"
+                          :for="`choice-${index}-${choiceIndex}`"
+                          >{{ choice }}</label
+                        >
+                      </div>
                     </div>
                   </div>
                 </div>
+                <div v-if="isQuizStart">
+                  <BaseButton
+                    class="mt-2"
+                    label="Envoyer la réponse"
+                    color="info"
+                    :rounded-full="true"
+                    :small="buttonsSmall"
+                    :outline="true"
+                    @click="sendResponseQuiz"
+                  />
+                  {{ formattedTime }}
+                </div>
                 <BaseButton
+                  v-if="!isQuizStart"
                   class="mt-2"
-                  label="Envoyer la réponse"
+                  label="Commencer le Quiz"
                   color="info"
                   :rounded-full="true"
                   :small="buttonsSmall"
                   :outline="true"
-                  @click="sendResponseQuiz"
+                  @click="startCountdown"
                 />
               </div>
             </div>

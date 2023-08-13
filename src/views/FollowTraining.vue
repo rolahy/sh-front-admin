@@ -70,7 +70,7 @@ onMounted(() => {
             <div class="drop-shadow-lg p-4 flex-1">
               <iframe
                 width="100%"
-                class="h-96"
+                class="h-56 md:h-96"
                 :src="`https://www.youtube.com/embed/${idVideoRef}`"
                 frameborder="0"
                 allowfullscreen
