@@ -4,7 +4,7 @@ import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
 import { useTrainingStore } from "@/stores/training";
 import { computed, onMounted, ref } from "vue";
 import IconRounded from "@/components/IconRounded.vue";
-import { mdiVideo } from "@mdi/js";
+import { mdiPlay } from "@mdi/js";
 import BaseButton from "@/components/BaseButton.vue";
 import { useRouter } from "vue-router";
 
@@ -12,6 +12,8 @@ const idVideoRef = ref("");
 
 const trainingStore = useTrainingStore();
 const trainings = computed(() => trainingStore.trainingInfo);
+const isVideoPlaying = ref(false);
+let activeLevelIndex = ref(0);
 
 const getYouTubeVideoId = (url) => {
   if (trainings.value.levels[0]?.videos[0].urlVideo) {
@@ -34,11 +36,27 @@ idVideoRef.value = getYouTubeVideoId(
   trainings.value.levels[0]?.videos[0].urlVideo
 );
 
-const playVIdeo = (video) => {
+const clickableIndex = ref(0);
+const currentLevelIndex = ref(0);
+
+const playVideo = (video, index, levelIndex) => {
   const id_video = getYouTubeVideoId(video.urlVideo);
   idVideoRef.value = id_video;
+  isVideoPlaying.value = true;
   //   affectation videoInfo state dans store
   trainingStore.videoInfo = video;
+  //
+  if (
+    levelIndex === currentLevelIndex.value &&
+    index === clickableIndex.value
+  ) {
+    if (index < trainings.value.levels[levelIndex].videos.length - 1) {
+      clickableIndex.value = index + 1;
+    } else if (levelIndex < trainings.value.levels.length - 1) {
+      currentLevelIndex.value = levelIndex + 1;
+      clickableIndex.value = 0;
+    }
+  }
 };
 
 const router = useRouter();
@@ -46,6 +64,17 @@ const router = useRouter();
 const tryQuiz = (level) => {
   trainingStore.levelInfoArray = level;
   router.push("/try-quiz");
+};
+
+// const currentLevelIndex = ref(0);
+
+const goToNextLevel = (index) => {
+  if (
+    index === currentLevelIndex.value &&
+    index < trainings.value.levels.length - 1
+  ) {
+    currentLevelIndex.value = index + 1;
+  }
 };
 
 onMounted(() => {
@@ -99,28 +128,33 @@ onMounted(() => {
             <!-- <BaseDivider /> -->
             <div class="p-4 flex-1">
               <div
-                v-for="level in trainings.levels"
+                v-for="(level, abc) in trainings.levels"
                 :key="level._id"
                 class="text-lg mb-2"
               >
                 <h2 class="font-bold mb-2 text-gray-500 dark:text-white">
                   {{ level.title }}
                 </h2>
+                {{ currentLevelIndex }}
+
                 <ul>
                   <li
-                    v-for="video in level.videos"
+                    v-for="(video, index) in level.videos"
                     :key="video._id"
-                    :class="`${
+                    :class="[
                       trainingStore.videoInfo.title == video.title
                         ? 'bg-slate-600 rounded-md text-white'
-                        : ''
-                    }`"
+                        : '',
+                      abc > currentLevelIndex ? 'non-cliquable' : '',
+                    ]"
                     class="w-full ml-2 dark:text-gray-100 border-b-2 border-neutral-300 border-opacity-100 py-2 dark:border-opacity-50 cursor-pointer"
-                    @click="playVIdeo(video)"
                   >
                     <div class="flex w-full justify-between items-center">
                       <div class="flex items-center">
-                        <IconRounded :icon="mdiVideo" class="mr-3" bg />
+                        <IconRounded
+                          :icon="mdiPlay"
+                          @click="playVideo(video, index, abc)"
+                        />
                         {{ video.title }}
                       </div>
                       <div>
@@ -130,13 +164,14 @@ onMounted(() => {
                   </li>
                 </ul>
                 <BaseButton
+                  v-if="clickableIndex >= level.videos.length"
                   class="mt-2"
                   label="Quiz"
                   color="info"
                   :rounded-full="true"
                   :small="buttonsSmall"
                   :outline="true"
-                  @click="tryQuiz(level)"
+                  @click="tryQuiz(video, level)"
                 />
               </div>
             </div>
@@ -146,3 +181,9 @@ onMounted(() => {
     </SectionMain>
   </LayoutAuthenticated>
 </template>
+<style>
+.non-cliquable {
+  pointer-events: none;
+  opacity: 0.5;
+}
+</style>
