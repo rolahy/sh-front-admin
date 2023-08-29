@@ -39,6 +39,8 @@ idVideoRef.value = getYouTubeVideoId(
 const clickableIndex = ref(0);
 const currentLevelIndex = ref(0);
 
+const firstLevelClickableIndex = ref(0);
+
 const playVideo = (video, index, levelIndex) => {
   const id_video = getYouTubeVideoId(video.urlVideo);
   idVideoRef.value = id_video;
@@ -46,16 +48,12 @@ const playVideo = (video, index, levelIndex) => {
   //   affectation videoInfo state dans store
   trainingStore.videoInfo = video;
   //
-  if (
-    levelIndex === currentLevelIndex.value &&
-    index === clickableIndex.value
-  ) {
-    if (index < trainings.value.levels[levelIndex].videos.length - 1) {
-      clickableIndex.value = index + 1;
-    } else if (levelIndex < trainings.value.levels.length - 1) {
-      currentLevelIndex.value = levelIndex + 1;
-      clickableIndex.value = 0;
-    }
+  if (index < trainings.value.levels[levelIndex].videos.length - 1) {
+    clickableIndex.value = index + 1;
+    firstLevelClickableIndex.value++;
+  } else if (levelIndex < trainings.value.levels.length - 1) {
+    currentLevelIndex.value = levelIndex + 1;
+    firstLevelClickableIndex.value = 0;
   }
 };
 
@@ -65,17 +63,6 @@ const tryQuiz = (level) => {
   trainingStore.levelInfoArray = level;
   router.push("/try-quiz");
 };
-
-// const currentLevelIndex = ref(0);
-
-// const goToNextLevel = (index) => {
-//   if (
-//     index === currentLevelIndex.value &&
-//     index < trainings.value.levels.length - 1
-//   ) {
-//     currentLevelIndex.value = index + 1;
-//   }
-// };
 
 onMounted(() => {
   trainingStore.videoInfo = trainings.value.levels[0]?.videos[0]; // initialisation videoInfo state dans store
@@ -135,8 +122,6 @@ onMounted(() => {
                 <h2 class="font-bold mb-2 text-gray-500 dark:text-white">
                   {{ level.title }}
                 </h2>
-                {{ currentLevelIndex }}
-
                 <ul>
                   <li
                     v-for="(video, index) in level.videos"
@@ -153,6 +138,9 @@ onMounted(() => {
                       <div class="flex items-center">
                         <IconRounded
                           :icon="mdiPlay"
+                          :class="{
+                            'non-cliquable': index > firstLevelClickableIndex,
+                          }"
                           @click="playVideo(video, index, abc)"
                         />
                         {{ video.title }}
