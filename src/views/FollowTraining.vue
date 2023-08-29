@@ -65,7 +65,7 @@ const tryQuiz = (level) => {
 };
 
 onMounted(() => {
-  trainingStore.videoInfo = trainings.value.levels[0]?.videos[0]; // initialisation videoInfo state dans store
+  trainingStore.videoInfo = trainings.value.levels[0]?.videos[0]; // initialisation videoInfo state dans store.
 });
 </script>
 
