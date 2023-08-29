@@ -13,7 +13,7 @@ const idVideoRef = ref("");
 const trainingStore = useTrainingStore();
 const trainings = computed(() => trainingStore.trainingInfo);
 const isVideoPlaying = ref(false);
-let activeLevelIndex = ref(0);
+// let activeLevelIndex = ref(0);
 
 const getYouTubeVideoId = (url) => {
   if (trainings.value.levels[0]?.videos[0].urlVideo) {
@@ -68,14 +68,14 @@ const tryQuiz = (level) => {
 
 // const currentLevelIndex = ref(0);
 
-const goToNextLevel = (index) => {
-  if (
-    index === currentLevelIndex.value &&
-    index < trainings.value.levels.length - 1
-  ) {
-    currentLevelIndex.value = index + 1;
-  }
-};
+// const goToNextLevel = (index) => {
+//   if (
+//     index === currentLevelIndex.value &&
+//     index < trainings.value.levels.length - 1
+//   ) {
+//     currentLevelIndex.value = index + 1;
+//   }
+// };
 
 onMounted(() => {
   trainingStore.videoInfo = trainings.value.levels[0]?.videos[0]; // initialisation videoInfo state dans store
