@@ -37,7 +37,6 @@ idVideoRef.value = getYouTubeVideoId(
 );
 
 const clickableIndex = ref(0);
-const currentLevelIndex = ref(0);
 
 const firstLevelClickableIndex = ref(0);
 
@@ -47,16 +46,16 @@ const playVideo = (video, indexVideo, indexLevel) => {
   isVideoPlaying.value = true;
   //   affectation videoInfo state dans store
   trainingStore.videoInfo = video;
+  console.log('indexLevel', indexLevel)
   //
   // if (index < trainings.value.levels[levelIndex].videos.length - 1) {
   clickableIndex.value = indexVideo + 1;
   firstLevelClickableIndex.value++;
-  if (
-    trainings.value.levels[indexLevel].videos.length == clickableIndex.value
-  ) {
-    currentLevelIndex.value++;
-    firstLevelClickableIndex.value = 0;
-  }
+  // if (
+  //   trainings.value.levels[indexLevel].videos.length == clickableIndex.value && userStore.userInfo.isQuizIsFinish && userStore.userInfo.scoreTraining > 6
+  // ) {
+  //   trainingStore.currentLevelIndex++;
+  // }
 };
 
 const router = useRouter();
@@ -116,14 +115,11 @@ onMounted(() => {
             </div>
             <!-- <BaseDivider /> -->
             <div class="p-4 flex-1">
-              ty ny clickableIndex: {{ clickableIndex }} ty ny curentLevelIndex
-              : {{ currentLevelIndex }}
               <div
                 v-for="(level, indexLevel) in trainings.levels"
                 :key="level._id"
                 class="text-lg mb-2"
               >
-                indexLevel vaut : {{ indexLevel }}
                 <h2 class="font-bold mb-2 text-gray-500 dark:text-white">
                   {{ level.title }}
                 </h2>
@@ -135,7 +131,9 @@ onMounted(() => {
                       trainingStore.videoInfo.title == video.title
                         ? 'bg-slate-600 rounded-md text-white'
                         : '',
-                      indexLevel > currentLevelIndex ? 'non-cliquable' : '',
+                      indexLevel > trainingStore.currentLevelIndex
+                        ? 'non-cliquable'
+                        : '',
                     ]"
                     class="w-full ml-2 dark:text-gray-100 border-b-2 border-neutral-300 border-opacity-100 py-2 dark:border-opacity-50 cursor-pointer"
                   >
@@ -157,12 +155,11 @@ onMounted(() => {
                     </div>
                   </li>
                 </ul>
-                length {{ trainings.levels[indexLevel].videos.length }}
                 <BaseButton
                   v-if="
                     clickableIndex ==
                       trainings.levels[indexLevel].videos.length &&
-                    indexLevel < currentLevelIndex
+                    indexLevel == trainingStore.currentLevelIndex
                   "
                   class="mt-2"
                   label="Quiz"
@@ -170,7 +167,7 @@ onMounted(() => {
                   :rounded-full="true"
                   :small="buttonsSmall"
                   :outline="true"
-                  @click="tryQuiz(video, level)"
+                  @click="tryQuiz(level)"
                 />
               </div>
             </div>

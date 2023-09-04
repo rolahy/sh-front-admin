@@ -8,6 +8,8 @@ export const useUserStore = defineStore("user", {
       username: "",
       roles: [],
       password: "",
+      scoreTraining: 0,
+      isQuizIsFinish: false,
     },
     isModalEdit: false,
     isEditingUser: false,

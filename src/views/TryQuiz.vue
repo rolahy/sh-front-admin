@@ -4,8 +4,12 @@ import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
 import { useTrainingStore } from "@/stores/training";
 import { computed, ref, onUnmounted } from "vue";
 import BaseButton from "@/components/BaseButton.vue";
+import { useUserStore } from "@/stores/user";
+import { useRouter } from "vue-router";
 
 const trainingStore = useTrainingStore();
+const userStore = useUserStore();
+const router = useRouter();
 const responseQuiz = ref([]);
 const score = ref(null);
 const sendResponseQuiz = () => {
@@ -30,7 +34,13 @@ const sendResponseQuiz = () => {
 
   // Calcul du score en pourcentage
   const totalQuestions = trainingStore.levelInfoArray.quiz?.questions.length;
-  score.value = (correctResponses / totalQuestions) * 100 + " %";
+  score.value = (correctResponses / totalQuestions) * 10;
+  userStore.userInfo.scoreTraining = score.value;
+  userStore.userInfo.isQuizIsFinish = true;
+  if (score.value >= 7) {
+    trainingStore.currentLevelIndex += 1;
+  }
+  router.go(-1);
 };
 
 let totalSeconds = ref(
@@ -70,6 +80,7 @@ onUnmounted(() => {
 
 <template>
   <LayoutAuthenticated>
+    {{ userStore.userInfo }}
     <SectionMain>
       <!-- component -->
       <section
