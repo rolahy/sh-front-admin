@@ -39,11 +39,10 @@ const validations = reactive({
 
 const handleLogin = async () => {
   try {
-    // Valider le champ "Login"
     await validations.username.fn(auth.user.username);
     await validations.password.fn(auth.user.password);
     // Si la validation réussit, appeler auth.login
-    await auth.login();
+    auth.login();
   } catch (error) {
     validations.username.error = error.message;
     validations.password.error = error.message;
