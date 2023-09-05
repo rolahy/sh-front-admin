@@ -50,20 +50,23 @@ const handleLogin = async () => {
   }
 };
 
-const createValidationWatcher = (property, key) => {
-  return watch(
-    () => property,
-    (newValue) => {
-      console.log("niova e ");
-      if (newValue !== "") {
-        validations[key].error = "";
-      }
+watch(
+  () => auth.user.username,
+  (newValue) => {
+    if (newValue != "") {
+      validations.username.error = "";
     }
-  );
-};
+  }
+);
 
-createValidationWatcher(auth.user.username, "username");
-createValidationWatcher(auth.user.password, "password");
+watch(
+  () => auth.user.password,
+  (newValue) => {
+    if (newValue != "") {
+      validations.password.error = "";
+    }
+  }
+);
 </script>
 
 <template>
