@@ -2,16 +2,19 @@
 import SectionMain from "@/components/SectionMain.vue";
 import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
 import { useTrainingStore } from "@/stores/training";
-import { computed, ref, onUnmounted } from "vue";
+import { computed, ref, onUnmounted, watch } from "vue";
 import BaseButton from "@/components/BaseButton.vue";
 import { useUserStore } from "@/stores/user";
 import { useRouter } from "vue-router";
+import CardBoxModal from "@/components/CardBoxModal.vue";
+import BaseButtons from "@/components/BaseButtons.vue";
 
 const trainingStore = useTrainingStore();
 const userStore = useUserStore();
 const router = useRouter();
 const responseQuiz = ref([]);
 const score = ref(null);
+const showModalScore = ref(false);
 const sendResponseQuiz = () => {
   let correctResponses = 0;
 
@@ -40,7 +43,7 @@ const sendResponseQuiz = () => {
   if (score.value >= 7) {
     trainingStore.currentLevelIndex += 1;
   }
-  router.go(-1);
+  showModalScore.value = true;
 };
 
 let totalSeconds = ref(
@@ -73,6 +76,16 @@ const startCountdown = () => {
   countdown.value = setInterval(updateCountdown, 1000);
 };
 
+const clickButtonCLose = () => {
+  router.go(-1);
+};
+
+watch(showModalScore, () => {
+  if (!showModalScore.value) {
+    router.go(-1);
+  }
+});
+
 onUnmounted(() => {
   clearInterval(countdown.value);
 });
@@ -80,12 +93,24 @@ onUnmounted(() => {
 
 <template>
   <LayoutAuthenticated>
-    {{ userStore.userInfo }}
     <SectionMain>
       <!-- component -->
       <section
         class="bg-white text-gray-700 dark:text-white dark:bg-slate-900/50 rounded-lg drop-shadow-lg"
       >
+        <CardBoxModal v-model="showModalScore" title="Note obtenu">
+          <div class="text-center">Vous avez obtenu {{ score + "/10" }}</div>
+          <BaseButtons>
+            <BaseButton
+              label="Fermer"
+              color="info"
+              :rounded-full="true"
+              :small="buttonsSmall"
+              :outline="true"
+              @click="clickButtonCLose"
+            />
+          </BaseButtons>
+        </CardBoxModal>
         <!-- {{ customElementsForm.radio }} index choix -->
         <div class="container py-2 mx-auto">
           <!-- component -->
