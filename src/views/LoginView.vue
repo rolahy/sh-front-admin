@@ -14,7 +14,10 @@ import { reactive, watch } from "vue";
 const auth = useAuthStore();
 
 const schema = yup.object().shape({
-  username: yup.string().required("Ce champ est requis"),
+  username: yup
+    .string()
+    .required("Ce champ est requis")
+    .email("Ce champ doit être une adresse e-mail valide"),
   password: yup.string().required("Ce champ est requis"),
 });
 
