@@ -17,6 +17,15 @@ const trainingStore = useTrainingStore();
 const levels = ref(0);
 const levelWithVideo = ref([]);
 const indexLevelsInTrainingInfo = ref(null);
+const selectOptions = [
+  "niveau 1",
+  "niveau 2",
+  "niveau 3",
+  "niveau 4",
+  "niveau 5",
+  "niveau 6",
+  "niveau 7",
+];
 
 const createVideoAndLevel = () => {
   trainingStore.isCreateFormation = true;
@@ -106,14 +115,14 @@ const addQuestionsToQuiz = () => {
     </div> -->
     <CardBoxModal
       v-model="trainingStore.isCreateFormation"
-      :title="titleModal"
+      title="Créer niveau et video"
       @cancel="closeModal"
     >
-      <FormField label="Créer niveau et video" class="my-3">
+      <FormField label="Séléctionner le niveau" class="my-3">
         <FormField class="mt-2">
           <FormControl
             v-model="trainingStore.levelInfoArray.title"
-            :icon="mdiAccount"
+            :options="selectOptions"
             placeholder="Niveau"
           />
         </FormField>
