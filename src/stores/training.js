@@ -82,7 +82,7 @@ export const useTrainingStore = defineStore("training", {
         .post(this.url, this.trainingInfo, this.config)
         .then((res) => {
           this.isModalEdit = false;
-          this.getAllTraining();
+          this.router.push({ name: "training-list" });
           console.log("created", res);
         })
         .catch((error) => {
