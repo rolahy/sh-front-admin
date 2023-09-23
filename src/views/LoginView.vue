@@ -14,11 +14,11 @@ import { ref } from "vue";
 
 const auth = useAuthStore();
 
-const requiredNameLength = ref(6);
+const requiredPasswordLength = ref(6);
 
 const rules = {
   username: { required, email },
-  password: { required, minLength: minLength(requiredNameLength.value) },
+  password: { required, minLength: minLength(requiredPasswordLength.value) },
 };
 
 const v$ = useVuelidate(rules, auth.user);
