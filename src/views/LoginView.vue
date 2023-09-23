@@ -9,13 +9,16 @@ import BaseButtons from "@/components/BaseButtons.vue";
 import LayoutGuest from "@/layouts/LayoutGuest.vue";
 import { useAuthStore } from "@/stores/auth";
 import { useVuelidate } from "@vuelidate/core";
-import { required, email } from "@vuelidate/validators";
+import { required, email, minLength } from "@vuelidate/validators";
+import { ref } from "vue";
 
 const auth = useAuthStore();
 
+const requiredNameLength = ref(6);
+
 const rules = {
   username: { required, email },
-  password: { required },
+  password: { required, minLength: minLength(requiredNameLength.value) },
 };
 
 const v$ = useVuelidate(rules, auth.user);
