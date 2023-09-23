@@ -8,74 +8,31 @@ import BaseButton from "@/components/BaseButton.vue";
 import BaseButtons from "@/components/BaseButtons.vue";
 import LayoutGuest from "@/layouts/LayoutGuest.vue";
 import { useAuthStore } from "@/stores/auth";
-import * as yup from "yup";
-import { reactive, watch } from "vue";
+import { useVuelidate } from "@vuelidate/core";
+import { required, email } from "@vuelidate/validators";
 
 const auth = useAuthStore();
 
-const schema = yup.object().shape({
-  username: yup
-    .string()
-    .required("Ce champ est requis")
-    .email("Ce champ doit être une adresse e-mail valide"),
-  password: yup.string().required("Ce champ est requis"),
-});
-
-const validations = reactive({
-  username: {
-    fn: (value) =>
-      schema.validateAt("username", {
-        username: value,
-      }),
-    msg: "required",
-    error: "",
-  },
-  password: {
-    fn: (value) =>
-      schema.validateAt("password", {
-        password: value,
-      }),
-    msg: "required",
-    error: "",
-  },
-});
-
-const handleLogin = async () => {
-  try {
-    await validations.username.fn(auth.user.username);
-    await validations.password.fn(auth.user.password);
-    // Si la validation réussit, appeler auth.login
-    auth.login();
-  } catch (error) {
-    validations.username.error = error.message;
-    validations.password.error = error.message;
-  }
+const rules = {
+  username: { required, email },
+  password: { required },
 };
 
-watch(
-  () => auth.user.username,
-  (newValue) => {
-    if (newValue != "") {
-      validations.username.error = "";
-    }
-  }
-);
+const v$ = useVuelidate(rules, auth.user);
 
-watch(
-  () => auth.user.password,
-  (newValue) => {
-    if (newValue != "") {
-      validations.password.error = "";
-    }
+const handleLogin = async () => {
+  const result = await v$.value.$validate();
+  if (result) {
+    auth.login();
   }
-);
+};
 </script>
 
 <template>
   <LayoutGuest>
     <SectionFullScreen v-slot="{ cardClass }" bg="purplePink">
       <CardBox :class="cardClass">
-        <FormField label="Login" :help="validations['username'].error">
+        <FormField label="Login">
           <FormControl
             v-model="auth.user.username"
             :icon="mdiAccount"
@@ -83,8 +40,14 @@ watch(
             autocomplete="username"
           />
         </FormField>
-
-        <FormField label="Password" :help="validations['password'].error">
+        <div
+          v-for="error of v$.username.$errors"
+          :key="error.$uid"
+          class="input-errors"
+        >
+          <div class="text-red-800">{{ error.$message }}</div>
+        </div>
+        <FormField label="Password">
           <FormControl
             v-model="auth.user.password"
             :icon="mdiAsterisk"
@@ -93,6 +56,21 @@ watch(
             autocomplete="current-password"
           />
         </FormField>
+        <div
+          v-for="error of v$.password.$errors"
+          :key="error.$uid"
+          class="input-errors"
+        >
+          <div class="text-red-800">{{ error.$message }}</div>
+        </div>
+
+        <!-- <FormCheckRadio
+          v-model="form.remember"
+          name="remember"
+          label="Remember"
+          :input-value="true"
+        /> -->
+
         <template #footer>
           <BaseButtons>
             <BaseButton
