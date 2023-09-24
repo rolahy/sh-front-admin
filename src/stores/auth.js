@@ -8,9 +8,11 @@ export const useAuthStore = defineStore("auth", {
       password: "",
     },
     access_token: "",
+    isLogin: false,
   }),
   actions: {
     login() {
+      this.isLogin = true;
       axios
         .post("https://sh-api-v1.up.railway.app/auth/login", this.user)
         .then((res) => {
@@ -20,6 +22,9 @@ export const useAuthStore = defineStore("auth", {
         })
         .catch((error) => {
           console.log("erreur", error);
+        })
+        .finally(() => {
+          this.isLogin = false;
         });
     },
   },

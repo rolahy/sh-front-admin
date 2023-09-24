@@ -13,6 +13,14 @@ const props = defineProps({
     type: String,
     default: null,
   },
+  isLogin: {
+    type: Boolean,
+    default: false,
+  },
+  imageLoad: {
+    type: String,
+    default: null,
+  },
   iconSize: {
     type: [String, Number],
     default: null,
@@ -119,6 +127,7 @@ const componentClass = computed(() => {
     :disabled="disabled"
   >
     <BaseIcon v-if="icon" :path="icon" :size="iconSize" />
+    <img v-if="isLogin" :src="imageLoad" class="h-7 w-7" />
     <span v-if="label" :class="labelClass">{{ label }}</span>
   </component>
 </template>

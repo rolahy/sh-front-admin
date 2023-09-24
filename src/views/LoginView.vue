@@ -11,6 +11,7 @@ import { useAuthStore } from "@/stores/auth";
 import { useVuelidate } from "@vuelidate/core";
 import { required, email, minLength } from "@vuelidate/validators";
 import { ref } from "vue";
+import loading from "@/assets/spinner.gif";
 
 const auth = useAuthStore();
 
@@ -77,6 +78,8 @@ const handleLogin = async () => {
         <template #footer>
           <BaseButtons>
             <BaseButton
+              :is-login="auth.isLogin"
+              :image-load="loading"
               type="submit"
               color="info"
               label="Login"
