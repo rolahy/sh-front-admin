@@ -5,6 +5,7 @@ import { useStyleStore } from "@/stores/style.js";
 import AsideMenuList from "@/components/AsideMenuList.vue";
 import AsideMenuItem from "@/components/AsideMenuItem.vue";
 import BaseIcon from "@/components/BaseIcon.vue";
+import { useRouter } from "vue-router";
 
 defineProps({
   menu: {
@@ -18,7 +19,7 @@ const emit = defineEmits(["menu-click", "aside-lg-close-click"]);
 const styleStore = useStyleStore();
 
 const logoutItem = computed(() => ({
-  label: "Logout",
+  label: "Déconnexion",
   icon: mdiLogout,
   color: "info",
   isLogout: true,
@@ -30,6 +31,13 @@ const menuClick = (event, item) => {
 
 const asideLgCloseClick = (event) => {
   emit("aside-lg-close-click", event);
+};
+
+const router = useRouter();
+
+const logOut = () => {
+  localStorage.clear();
+  router.push({ name: "login" });
 };
 </script>
 
@@ -70,7 +78,7 @@ const asideLgCloseClick = (event) => {
       </div>
 
       <ul>
-        <AsideMenuItem :item="logoutItem" @menu-click="menuClick" />
+        <AsideMenuItem :item="logoutItem" @click="logOut" />
       </ul>
     </div>
   </aside>
