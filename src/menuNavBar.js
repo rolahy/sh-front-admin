@@ -48,7 +48,7 @@ export default [
       },
       {
         icon: mdiLogout,
-        label: "Log Out",
+        label: "Déconnecter",
         isLogout: true,
       },
     ],

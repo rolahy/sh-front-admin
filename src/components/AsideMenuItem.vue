@@ -6,6 +6,7 @@ import { mdiMinus, mdiPlus } from "@mdi/js";
 import { getButtonColor } from "@/colors.js";
 import BaseIcon from "@/components/BaseIcon.vue";
 import AsideMenuList from "@/components/AsideMenuList.vue";
+import { useRouter } from "vue-router";
 
 const props = defineProps({
   item: {
@@ -14,6 +15,8 @@ const props = defineProps({
   },
   isDropdownList: Boolean,
 });
+
+const router = useRouter();
 
 const emit = defineEmits(["menu-click"]);
 
@@ -43,6 +46,11 @@ const menuClick = (event) => {
     isDropdownActive.value = !isDropdownActive.value;
   }
 };
+
+const logOut = () => {
+  localStorage.removeItem("access_token");
+  router.push({ name: "login" });
+};
 </script>
 
 <template>
@@ -71,6 +79,7 @@ const menuClick = (event) => {
           { 'pr-12': !hasDropdown },
           vSlot && vSlot.isExactActive ? asideMenuItemActiveStyle : '',
         ]"
+        @click="logOut"
         >{{ item.label }}</span
       >
       <BaseIcon
