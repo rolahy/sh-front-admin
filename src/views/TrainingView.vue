@@ -12,8 +12,30 @@ import { mdiBallotOutline, mdiAccount, mdiArchivePlus } from "@mdi/js";
 import { useTrainingStore } from "@/stores/training";
 import { ref } from "vue";
 import CardBoxModal from "@/components/CardBoxModal.vue";
+import { useVuelidate } from "@vuelidate/core";
+import { required, minLength } from "@vuelidate/validators";
 
 const trainingStore = useTrainingStore();
+
+const rulesTrainingInfo = {
+  title: { required, minLength: minLength(5) },
+  description: { required, minLength: minLength(5) },
+  objective: { required, minLength: minLength(5) },
+  levels: { required },
+};
+const v$ = useVuelidate(rulesTrainingInfo, trainingStore.trainingInfo);
+
+const rulesVideoArray = {
+  title: { required, minLength: minLength(5) },
+  description: { required, minLength: minLength(5) },
+  duration: { required },
+  urlVideo: { required },
+};
+const u$ = useVuelidate(rulesVideoArray, trainingStore.videoArray);
+
+const rulesTitleLevel = { title: { required } };
+const x$ = useVuelidate(rulesTitleLevel, trainingStore.levelInfoArray);
+
 const levels = ref(0);
 const levelWithVideo = ref([]);
 const indexLevelsInTrainingInfo = ref(null);
@@ -53,15 +75,23 @@ const addLevelVideo = () => {
   trainingStore.trainingInfo.levels = levelWithVideo.value;
 };
 
-function addVideoToLevel() {
-  const videoInfoCopy = Object.assign({}, trainingStore.videoArray);
-  trainingStore.levelInfoArray.videos.push(videoInfoCopy);
-  trainingStore.videoArray = {
-    title: "",
-    description: "",
-    duration: "",
-    urlVideo: "",
-  };
+async function addVideoToLevel() {
+  const result = await u$.value.$validate();
+  const validX$ = await x$.value.$validate();
+  if (result && validX$) {
+    const videoInfoCopy = Object.assign({}, trainingStore.videoArray);
+    trainingStore.levelInfoArray.videos.push(videoInfoCopy);
+    trainingStore.videoArray = {
+      title: null,
+      description: null,
+      duration: null,
+      urlVideo: null,
+    };
+    // trainingStore.levelInfoArray = {
+    //   title: "",
+    //   videos: [],
+    // };
+  }
 }
 
 const closeModal = () => {
@@ -92,6 +122,13 @@ const addQuestionsToQuiz = () => {
   trainingStore.isCreateQuiz = false;
   //initialisation trainingStore.quizInfo.questions
   trainingStore.quizInfo.questions = [];
+};
+
+const handleCreateTraining = async () => {
+  const result = await v$.value.$validate();
+  if (result) {
+    trainingStore.createTraining;
+  }
 };
 </script>
 
@@ -125,6 +162,13 @@ const addQuestionsToQuiz = () => {
             :options="selectOptions"
             placeholder="Niveau"
           />
+          <div
+            v-for="error of x$.title.$errors"
+            :key="error.$uid"
+            class="input-errors"
+          >
+            <div class="text-red-600">{{ error.$message }}</div>
+          </div>
         </FormField>
         <div class="font-bold">Informations video:</div>
         <FormControl
@@ -132,21 +176,49 @@ const addQuestionsToQuiz = () => {
           :icon="mdiAccount"
           placeholder="Titre"
         />
+        <div
+          v-for="error of u$.title.$errors"
+          :key="error.$uid"
+          class="input-errors"
+        >
+          <div class="text-red-600">{{ error.$message }}</div>
+        </div>
         <FormControl
           v-model="trainingStore.videoArray.description"
           :icon="mdiAccount"
           placeholder="Description"
         />
+        <div
+          v-for="error of u$.description.$errors"
+          :key="error.$uid"
+          class="input-errors"
+        >
+          <div class="text-red-600">{{ error.$message }}</div>
+        </div>
         <FormControl
           v-model="trainingStore.videoArray.duration"
           :icon="mdiAccount"
           placeholder="Durée"
         />
+        <div
+          v-for="error of u$.duration.$errors"
+          :key="error.$uid"
+          class="input-errors"
+        >
+          <div class="text-red-600">{{ error.$message }}</div>
+        </div>
         <FormControl
           v-model="trainingStore.videoArray.urlVideo"
           :icon="mdiAccount"
           placeholder="Url vidéo"
         />
+        <div
+          v-for="error of u$.urlVideo.$errors"
+          :key="error.$uid"
+          class="input-errors"
+        >
+          <div class="text-red-600">{{ error.$message }}</div>
+        </div>
       </FormField>
       <BaseButtons>
         <BaseButton
@@ -262,10 +334,24 @@ const addQuestionsToQuiz = () => {
             :icon="mdiAccount"
             placeholder="Titre"
           />
+          <div
+            v-for="error of v$.title.$errors"
+            :key="error.$uid"
+            class="input-errors"
+          >
+            <div class="text-red-600">{{ error.$message }}</div>
+          </div>
           <FormControl
             v-model="trainingStore.trainingInfo.objective"
             placeholder="Objectif"
           />
+          <div
+            v-for="error of v$.objective.$errors"
+            :key="error.$uid"
+            class="input-errors"
+          >
+            <div class="text-red-600">{{ error.$message }}</div>
+          </div>
         </FormField>
         <FormField>
           <FormControl
@@ -273,17 +359,33 @@ const addQuestionsToQuiz = () => {
             type="textarea"
             placeholder="Description"
           />
+          <div
+            v-for="error of v$.description.$errors"
+            :key="error.$uid"
+            class="input-errors"
+          >
+            <div class="text-red-600">{{ error.$message }}</div>
+          </div>
         </FormField>
-        <BaseButton
-          class="mb-2"
-          color="lightDark"
-          label="Créer niveau"
-          :small="buttonsSmall"
-          :outline="buttonsOutline"
-          :disabled="levels == 7"
-          :rounded-full="true"
-          @click="createVideoAndLevel"
-        />
+        <div class="flex">
+          <BaseButton
+            class="mb-2"
+            color="lightDark"
+            label="Créer niveau"
+            :small="buttonsSmall"
+            :outline="buttonsOutline"
+            :disabled="levels == 7"
+            :rounded-full="true"
+            @click="createVideoAndLevel"
+          />
+          <div
+            v-for="error of v$.levels.$errors"
+            :key="error.$uid"
+            class="input-errors"
+          >
+            <div class="text-red-600">{{ error.$message }}</div>
+          </div>
+        </div>
         <!-- Affichage niveau et video -->
         <div v-if="levelWithVideo.length > 0">
           <div class="font-bold">Niveaux avec videos:</div>
@@ -322,7 +424,7 @@ const addQuestionsToQuiz = () => {
               type="submit"
               color="info"
               label="Enregister"
-              @click="trainingStore.createTraining"
+              @click="handleCreateTraining"
             />
           </BaseButtons>
         </template>
