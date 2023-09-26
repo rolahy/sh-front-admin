@@ -33,21 +33,11 @@ const rulesVideoArray = {
 };
 const u$ = useVuelidate(rulesVideoArray, trainingStore.videoArray);
 
-const rulesTitleLevel = { title: { required } };
-const x$ = useVuelidate(rulesTitleLevel, trainingStore.levelInfoArray);
-
 const levels = ref(0);
 const levelWithVideo = ref([]);
 const indexLevelsInTrainingInfo = ref(null);
-const selectOptions = [
-  "niveau 1",
-  "niveau 2",
-  "niveau 3",
-  "niveau 4",
-  "niveau 5",
-  "niveau 6",
-  "niveau 7",
-];
+
+trainingStore.levelInfoArray.title = "niveau " + (levels.value + 1);
 
 const createVideoAndLevel = () => {
   trainingStore.isCreateFormation = true;
@@ -73,12 +63,12 @@ const addLevelVideo = () => {
   };
   // afecation niveaux au nivaux d'une formation
   trainingStore.trainingInfo.levels = levelWithVideo.value;
+  trainingStore.levelInfoArray.title = "niveau " + (levels.value + 1);
 };
 
 async function addVideoToLevel() {
   const result = await u$.value.$validate();
-  const validX$ = await x$.value.$validate();
-  if (result && validX$) {
+  if (result) {
     const videoInfoCopy = Object.assign({}, trainingStore.videoArray);
     trainingStore.levelInfoArray.videos.push(videoInfoCopy);
     trainingStore.videoArray = {
@@ -87,10 +77,6 @@ async function addVideoToLevel() {
       duration: null,
       urlVideo: null,
     };
-    // trainingStore.levelInfoArray = {
-    //   title: "",
-    //   videos: [],
-    // };
   }
 }
 
@@ -134,6 +120,7 @@ const handleCreateTraining = async () => {
 
 <template>
   <LayoutAuthenticated>
+    {{ levels }}
     <!-- tyyy{{ aaa }}<br/>
     {{ trainingStore.levelInfoArray }}<br/>
     {{ trainingStore.videoArray }} -->
@@ -155,21 +142,8 @@ const handleCreateTraining = async () => {
       title="Créer niveau et video"
       @cancel="closeModal"
     >
-      <FormField label="Séléctionner le niveau" class="my-3">
-        <FormField class="mt-2">
-          <FormControl
-            v-model="trainingStore.levelInfoArray.title"
-            :options="selectOptions"
-            placeholder="Niveau"
-          />
-          <div
-            v-for="error of x$.title.$errors"
-            :key="error.$uid"
-            class="input-errors"
-          >
-            <div class="text-red-600">{{ error.$message }}</div>
-          </div>
-        </FormField>
+      <FormField label="Niveau" class="my-3">
+        {{ trainingStore.levelInfoArray.title }}
         <div class="font-bold">Informations video:</div>
         <FormControl
           v-model="trainingStore.videoArray.title"
