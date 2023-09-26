@@ -49,21 +49,24 @@ const createQuizForLevel = (index) => {
   trainingStore.isCreateQuiz = true;
 };
 
-const addLevelVideo = () => {
-  levels.value++;
-  trainingStore.isCreateFormation = false;
-  const levelInfoCopy = Object.assign({}, trainingStore.levelInfoArray);
-  levelWithVideo.value.push(levelInfoCopy);
-  trainingStore.levelInfoArray = {
-    title: "",
-    videos: [],
-    quiz: {
-      questions: [],
-    },
-  };
-  // afecation niveaux au nivaux d'une formation
-  trainingStore.trainingInfo.levels = levelWithVideo.value;
-  trainingStore.levelInfoArray.title = "niveau " + (levels.value + 1);
+const addLevelVideo = async () => {
+  const result = await u$.value.$validate();
+  if (result) {
+    levels.value++;
+    trainingStore.isCreateFormation = false;
+    const levelInfoCopy = Object.assign({}, trainingStore.levelInfoArray);
+    levelWithVideo.value.push(levelInfoCopy);
+    trainingStore.levelInfoArray = {
+      title: "",
+      videos: [],
+      quiz: {
+        questions: [],
+      },
+    };
+    // afecation niveaux au nivaux d'une formation
+    trainingStore.trainingInfo.levels = levelWithVideo.value;
+    trainingStore.levelInfoArray.title = "niveau " + (levels.value + 1);
+  }
 };
 
 async function addVideoToLevel() {
