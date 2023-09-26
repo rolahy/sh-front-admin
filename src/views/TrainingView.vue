@@ -204,6 +204,7 @@ const handleCreateTraining = async () => {
           :rounded-full="true"
           :small="buttonsSmall"
           :outline="true"
+          :disabled="!trainingStore.levelInfoArray.videos.length > 0"
           @click="addLevelVideo"
         />
         <BaseButton
