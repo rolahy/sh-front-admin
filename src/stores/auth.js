@@ -15,7 +15,7 @@ export const useAuthStore = defineStore("auth", {
       this.isLogin = true;
       axios
         .post(
-          "https://sh-api-emarolahy16-gmailcom.vercel.app/auth/login",
+          "http://sh-api-emarolahy16-gmailcom.vercel.app/auth/login",
           this.user
         )
         .then((res) => {
