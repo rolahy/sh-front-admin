@@ -14,7 +14,7 @@ export const useAuthStore = defineStore("auth", {
     login() {
       this.isLogin = true;
       axios
-        .post("https://sh-api-v1.vercel.app/auth/login/", this.user)
+        .post("https://sh-api-v1.vercel.app/auth/login", this.user)
         .then((res) => {
           localStorage.setItem("access_token", res.data.access_token);
           this.access_token = res.data.access_token;
