@@ -14,7 +14,7 @@ export const useUserStore = defineStore("user", {
     isModalEdit: false,
     isEditingUser: false,
     isCreateUser: false,
-    url: "https://sh-api-v1.up.railway.app/users",
+    url: "https://sh-api-v1.vercel.app/users",
     config: {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("access_token")}`,

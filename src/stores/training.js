@@ -42,7 +42,7 @@ export const useTrainingStore = defineStore("training", {
     isCreateFormation: false,
     isCreateQuiz: false,
     isLoading: false,
-    url: "https://sh-api-v1.up.railway.app/Trainings",
+    url: "https://sh-api-v1.vercel.app/Trainings",
     config: {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("access_token")}`,

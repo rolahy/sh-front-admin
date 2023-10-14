@@ -10,7 +10,7 @@ export const useRoleStore = defineStore("role", {
     isModalEdit: false,
     isEditingRole: false,
     isCreateRole: false,
-    url: "https://sh-api-v1.up.railway.app/roles",
+    url: "https://sh-api-v1.vercel.app/roles",
     config: {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("access_token")}`,
