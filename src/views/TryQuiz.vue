@@ -48,7 +48,7 @@ const sendResponseQuiz = () => {
     trainingStore.currentLevelIndex += 1;
   }
   noteStore.userId = authStore.userConnected._id;
-  noteStore.trainingId = 1;
+  noteStore.trainingId = trainingStore.trainingInfo._id;
   noteStore.note = score.value;
   noteStore.postNote();
   showModalScore.value = true;
