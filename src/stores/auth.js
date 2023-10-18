@@ -36,7 +36,7 @@ export const useAuthStore = defineStore("auth", {
         )
         .then((res) => {
           console.log("use connected", res.data);
-          this.userConnected = [...res.data];
+          this.userConnected = res.data[0];
           console.log("this.userConnected", res.data);
           // localStorage.setItem("userConnected", res.data.access_token);
         })

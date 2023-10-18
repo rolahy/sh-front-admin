@@ -8,9 +8,13 @@ import { useUserStore } from "@/stores/user";
 import { useRouter } from "vue-router";
 import CardBoxModal from "@/components/CardBoxModal.vue";
 import BaseButtons from "@/components/BaseButtons.vue";
+import { useNoteStore } from "@/stores/note";
+import { useAuthStore } from "@/stores/auth";
 
 const trainingStore = useTrainingStore();
 const userStore = useUserStore();
+const noteStore = useNoteStore();
+const authStore = useAuthStore();
 const router = useRouter();
 const responseQuiz = ref([]);
 const score = ref(null);
@@ -43,6 +47,10 @@ const sendResponseQuiz = () => {
   if (score.value >= 7) {
     trainingStore.currentLevelIndex += 1;
   }
+  noteStore.userId = authStore.userConnected._id;
+  noteStore.trainingId = 1;
+  noteStore.note = score.value;
+  noteStore.postNote();
   showModalScore.value = true;
 };
 
@@ -93,6 +101,7 @@ onUnmounted(() => {
 
 <template>
   <LayoutAuthenticated>
+    {{ trainingStore.trainingInfo }}
     <SectionMain>
       <!-- component -->
       <section
