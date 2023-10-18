@@ -7,7 +7,7 @@ export const useAuthStore = defineStore("auth", {
       username: "",
       password: "",
     },
-    userConnected: undefined,
+    userConnected: [],
     access_token: "",
     isLogin: false,
   }),
@@ -36,6 +36,8 @@ export const useAuthStore = defineStore("auth", {
         )
         .then((res) => {
           console.log("use connected", res.data);
+          this.userConnected = [...res.data];
+          console.log("this.userConnected", res.data);
           // localStorage.setItem("userConnected", res.data.access_token);
         })
         .catch((error) => {
