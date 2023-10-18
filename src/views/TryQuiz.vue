@@ -93,13 +93,8 @@ watch(showModalScore, () => {
 });
 
 onMounted(() => {
-  noteStore.userId = authStore.userConnected._id;
-  noteStore.trainingId = trainingStore.trainingInfo._id;
-  console.log(
-    "mounted",
-    authStore.userConnected._id,
-    trainingStore.trainingInfo._id
-  );
+  noteStore.note.userId = authStore.userConnected._id;
+  noteStore.note.trainingId = trainingStore.trainingInfo._id;
   console.log("mounted 2", noteStore.note);
 });
 
