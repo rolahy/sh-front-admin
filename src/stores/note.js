@@ -10,7 +10,7 @@ export const useAuthStore = defineStore("note", {
     },
   }),
   actions: {
-    login() {
+    postNote() {
       axios
         .post("https://sh-api-v1.vercel.app/notes", this.note)
         .then((res) => {
