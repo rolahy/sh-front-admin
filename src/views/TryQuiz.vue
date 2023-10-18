@@ -47,6 +47,8 @@ const sendResponseQuiz = () => {
   if (score.value >= 7) {
     trainingStore.currentLevelIndex += 1;
   }
+  noteStore.note.userId = authStore.userConnected._id;
+  noteStore.note.trainingId = trainingStore.trainingInfo._id;
   noteStore.note = score.value;
   noteStore.postNote();
   showModalScore.value = true;
@@ -90,12 +92,6 @@ watch(showModalScore, () => {
   if (!showModalScore.value) {
     router.go(-1);
   }
-});
-
-onMounted(() => {
-  noteStore.note.userId = authStore.userConnected._id;
-  noteStore.note.trainingId = trainingStore.trainingInfo._id;
-  console.log("mounted 22", noteStore.note);
 });
 
 onUnmounted(() => {
