@@ -2,7 +2,7 @@
 import SectionMain from "@/components/SectionMain.vue";
 import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
 import { useTrainingStore } from "@/stores/training";
-import { computed, ref, onUnmounted, watch } from "vue";
+import { computed, ref, onUnmounted, watch, onMounted } from "vue";
 import BaseButton from "@/components/BaseButton.vue";
 import { useUserStore } from "@/stores/user";
 import { useRouter } from "vue-router";
@@ -47,8 +47,6 @@ const sendResponseQuiz = () => {
   if (score.value >= 7) {
     trainingStore.currentLevelIndex += 1;
   }
-  noteStore.userId = authStore.userConnected._id;
-  noteStore.trainingId = trainingStore.trainingInfo._id;
   noteStore.note = score.value;
   noteStore.postNote();
   showModalScore.value = true;
@@ -94,6 +92,11 @@ watch(showModalScore, () => {
   }
 });
 
+onMounted(() => {
+  noteStore.userId = authStore.userConnected._id;
+  noteStore.trainingId = trainingStore.trainingInfo._id;
+});
+
 onUnmounted(() => {
   clearInterval(countdown.value);
 });
@@ -101,7 +104,6 @@ onUnmounted(() => {
 
 <template>
   <LayoutAuthenticated>
-    {{ trainingStore.trainingInfo }}
     <SectionMain>
       <!-- component -->
       <section
