@@ -31,7 +31,9 @@ export const useAuthStore = defineStore("auth", {
     },
     getUserconnected() {
       axios
-        .get("https://sh-api-v1.vercel.app/users?username=" + this.username)
+        .get(
+          "https://sh-api-v1.vercel.app/users?username=" + this.user.username
+        )
         .then((res) => {
           console.log("use connected", res.data);
           // localStorage.setItem("userConnected", res.data.access_token);
