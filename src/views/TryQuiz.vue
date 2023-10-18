@@ -95,7 +95,7 @@ watch(showModalScore, () => {
 onMounted(() => {
   noteStore.note.userId = authStore.userConnected._id;
   noteStore.note.trainingId = trainingStore.trainingInfo._id;
-  console.log("mounted 2", noteStore.note);
+  console.log("mounted 22", noteStore.note);
 });
 
 onUnmounted(() => {
