@@ -2,7 +2,7 @@
 import SectionMain from "@/components/SectionMain.vue";
 import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
 import { useTrainingStore } from "@/stores/training";
-import { computed, ref, onUnmounted, watch, onMounted } from "vue";
+import { computed, ref, onUnmounted, watch } from "vue";
 import BaseButton from "@/components/BaseButton.vue";
 import { useUserStore } from "@/stores/user";
 import { useRouter } from "vue-router";
