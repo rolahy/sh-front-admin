@@ -24,7 +24,7 @@ export const useUserStore = defineStore("user", {
   actions: {
     getAllUser() {
       axios
-        .get(this.url, this.config)
+        .get(this.url + "/all", this.config)
         .then((res) => {
           this.users = res.data;
         })
