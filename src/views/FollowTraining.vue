@@ -78,6 +78,7 @@ onMounted(() => {
     authStore.userConnected._id,
     trainingStore.trainingInfo._id
   );
+  console.log("1notes from api ", noteStore.note.note);
   // TODO add another condition is 1 mois apres clique 1er video
   if (noteStore.note.note >= 7) {
     console.log("notes from api ", noteStore.note.note);
