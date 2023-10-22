@@ -6,6 +6,10 @@ import { useTrainingStore } from "@/stores/training";
 const trainingStore = useTrainingStore();
 onMounted(() => {
   trainingStore.trainingInfo = localStorage.getItem("idTraining");
+  console.log(
+    "trainingStore.trainingInfo locale storage",
+    trainingStore.trainingInfo
+  );
 });
 </script>
 
