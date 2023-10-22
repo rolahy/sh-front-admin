@@ -96,7 +96,10 @@ watch(showModalScore, () => {
   }
 });
 
-onMounted(() => {});
+onMounted(() => {
+  trainingStore.trainingInfo = JSON.parse(localStorage.getItem("training"));
+  console.log("trainingStore.trainingInfo._id", trainingStore.trainingInfo._id);
+});
 
 onUnmounted(() => {
   clearInterval(countdown.value);
