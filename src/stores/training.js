@@ -4,7 +4,7 @@ import axios from "axios";
 export const useTrainingStore = defineStore("training", {
   state: () => ({
     trainings: [],
-    currentLevelIndex: 1,
+    currentLevelIndex: 0,
     quizInfo: {
       questions: [],
     },

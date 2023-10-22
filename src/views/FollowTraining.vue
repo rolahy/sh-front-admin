@@ -7,12 +7,16 @@ import IconRounded from "@/components/IconRounded.vue";
 import { mdiPlay } from "@mdi/js";
 import BaseButton from "@/components/BaseButton.vue";
 import { useRouter } from "vue-router";
+import { useNoteStore } from "@/stores/note";
+import { useAuthStore } from "@/stores/auth";
 
 const idVideoRef = ref("");
 
 const trainingStore = useTrainingStore();
 const trainings = computed(() => trainingStore.trainingInfo);
 const isVideoPlaying = ref(false);
+const noteStore = useNoteStore();
+const authStore = useAuthStore();
 // let activeLevelIndex = ref(0);
 
 const getYouTubeVideoId = (url) => {
@@ -67,8 +71,16 @@ const tryQuiz = (level) => {
 };
 
 onMounted(() => {
+  authStore.userConnected = JSON.parse(localStorage.getItem("userConnected"));
   trainingStore.trainingInfo = JSON.parse(localStorage.getItem("training"));
   trainingStore.videoInfo = trainings.value.levels[0]?.videos[0]; // initialisation videoInfo state dans store.
+  noteStore.getNote(
+    authStore.userConnected._id,
+    trainingStore.trainingInfo._id
+  );
+  // if (score.value >= 7) {
+  //   trainingStore.currentLevelIndex += 1;
+  // }
 });
 </script>
 

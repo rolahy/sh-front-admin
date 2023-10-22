@@ -25,5 +25,19 @@ export const useNoteStore = defineStore("note", {
           console.log("erreur", error);
         });
     },
+    getNote(userId, trainingId) {
+      axios
+        .get(
+          "https://sh-api-v1.vercel.app/notes/" + userId + "/" + trainingId,
+          this.config
+        )
+        .then((res) => {
+          this.note.note = res.data.note;
+          console.log("notes", res);
+        })
+        .catch((error) => {
+          console.log("erreur", error);
+        });
+    },
   },
 });
