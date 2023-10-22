@@ -10,7 +10,7 @@ const router = useRouter();
 
 const followTraining = (training) => {
   trainingStore.trainingInfo = training;
-  localStorage.setItem("idTraining", training);
+  localStorage.setItem("training", JSON.stringify(training));
   router.push("/follow-training");
 };
 
