@@ -46,7 +46,7 @@ const playVideo = (video, indexVideo, indexLevel) => {
   isVideoPlaying.value = true;
   //   affectation videoInfo state dans store
   trainingStore.videoInfo = video;
-  console.log('indexLevel', indexLevel)
+  console.log("indexLevel", indexLevel);
   //
   // if (index < trainings.value.levels[levelIndex].videos.length - 1) {
   clickableIndex.value = indexVideo + 1;
@@ -66,6 +66,7 @@ const tryQuiz = (level) => {
 };
 
 onMounted(() => {
+  trainingStore.trainingInfo = JSON.parse(localStorage.getItem("training"));
   trainingStore.videoInfo = trainings.value.levels[0]?.videos[0]; // initialisation videoInfo state dans store.
 });
 </script>
