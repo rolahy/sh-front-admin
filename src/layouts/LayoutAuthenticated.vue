@@ -18,8 +18,11 @@ import { useTrainingStore } from "@/stores/training";
 const trainingStore = useTrainingStore();
 
 onMounted(() => {
-  console.log("mounted layoutAuthe")
-  if (JSON.parse(localStorage.getItem("training")).length > 0) {
+  console.log(
+    "mounted layoutAuthe",
+    JSON.parse(localStorage.getItem("training"))
+  );
+  if (JSON.parse(localStorage.getItem("training")).length != null) {
     trainingStore.trainingInfo = JSON.parse(localStorage.getItem("training"));
   }
 });
