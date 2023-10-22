@@ -12,23 +12,6 @@ import NavBar from "@/components/NavBar.vue";
 import NavBarItemPlain from "@/components/NavBarItemPlain.vue";
 import AsideMenu from "@/components/AsideMenu.vue";
 import FooterBar from "@/components/FooterBar.vue";
-import { onMounted } from "vue";
-import { useTrainingStore } from "@/stores/training";
-
-const trainingStore = useTrainingStore();
-
-onMounted(() => {
-  console.log(
-    "mounted layoutAuthe",
-    JSON.parse(localStorage.getItem("training"))
-  );
-  if (JSON.parse(localStorage.getItem("training")).length != null) {
-    setTimeout(() => {
-      trainingStore.trainingInfo = JSON.parse(localStorage.getItem("training"));
-    }, 400);
-  }
-  console.log("trainingStore.trainingInfo._id", trainingStore.trainingInfo);
-});
 
 useMainStore().setUser({
   name: "John Doe",
