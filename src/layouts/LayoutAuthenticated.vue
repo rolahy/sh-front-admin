@@ -12,6 +12,16 @@ import NavBar from "@/components/NavBar.vue";
 import NavBarItemPlain from "@/components/NavBarItemPlain.vue";
 import AsideMenu from "@/components/AsideMenu.vue";
 import FooterBar from "@/components/FooterBar.vue";
+import { onMounted } from "vue";
+import { useTrainingStore } from "@/stores/training";
+
+const trainingStore = useTrainingStore();
+
+onMounted(() => {
+  if (JSON.parse(localStorage.getItem("training")).length > 0) {
+    trainingStore.trainingInfo = JSON.parse(localStorage.getItem("training"));
+  }
+});
 
 useMainStore().setUser({
   name: "John Doe",
