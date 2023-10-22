@@ -78,9 +78,10 @@ onMounted(() => {
     authStore.userConnected._id,
     trainingStore.trainingInfo._id
   );
-  // if (score.value >= 7) {
-  //   trainingStore.currentLevelIndex += 1;
-  // }
+  // TODO add another condition is 1 mois apres clique 1er video
+  if (noteStore.note.note >= 7) {
+    trainingStore.currentLevelIndex += 1;
+  }
 });
 </script>
 
