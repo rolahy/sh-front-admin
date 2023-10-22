@@ -96,9 +96,7 @@ watch(showModalScore, () => {
   }
 });
 
-onMounted(() => {
-  console.log("trainingStore.trainingInfo._id", trainingStore.trainingInfo._id)
-});
+onMounted(() => {});
 
 onUnmounted(() => {
   clearInterval(countdown.value);

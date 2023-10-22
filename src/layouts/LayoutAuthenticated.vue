@@ -27,6 +27,7 @@ onMounted(() => {
       trainingStore.trainingInfo = JSON.parse(localStorage.getItem("training"));
     }, 400);
   }
+  console.log("trainingStore.trainingInfo._id", trainingStore.trainingInfo._id)
 });
 
 useMainStore().setUser({
