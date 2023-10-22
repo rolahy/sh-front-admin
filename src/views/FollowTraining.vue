@@ -62,6 +62,7 @@ const router = useRouter();
 
 const tryQuiz = (level) => {
   trainingStore.levelInfoArray = level;
+  localStorage.setItem("level", JSON.stringify(level));
   router.push("/try-quiz");
 };
 
