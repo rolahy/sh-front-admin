@@ -25,8 +25,8 @@ export const useNoteStore = defineStore("note", {
           console.log("erreur", error);
         });
     },
-    getNote(userId, trainingId) {
-      axios
+    async getNote(userId, trainingId) {
+      await axios
         .get(
           "https://sh-api-v1.vercel.app/notes/" + userId + "/" + trainingId,
           this.config

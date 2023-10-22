@@ -70,11 +70,11 @@ const tryQuiz = (level) => {
   router.push("/try-quiz");
 };
 
-onMounted(() => {
+onMounted(async () => {
   authStore.userConnected = JSON.parse(localStorage.getItem("userConnected"));
   trainingStore.trainingInfo = JSON.parse(localStorage.getItem("training"));
   trainingStore.videoInfo = trainings.value.levels[0]?.videos[0]; // initialisation videoInfo state dans store.
-  noteStore.getNote(
+  await noteStore.getNote(
     authStore.userConnected._id,
     trainingStore.trainingInfo._id
   );
