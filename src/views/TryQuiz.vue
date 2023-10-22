@@ -97,6 +97,7 @@ watch(showModalScore, () => {
 });
 
 onMounted(() => {
+  trainingStore.trainingInfo = JSON.parse(localStorage.getItem("training"));
   authStore.userConnected = JSON.parse(localStorage.getItem("userConnected"));
   trainingStore.trainingInfo = JSON.parse(localStorage.getItem("training"));
 });
