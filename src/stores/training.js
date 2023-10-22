@@ -51,7 +51,7 @@ export const useTrainingStore = defineStore("training", {
   }),
   actions: {
     getAllTraining() {
-      console.log("token", localStorage.getItem("access_token"));
+      console.log("token", this.config);
       this.isLoading = true;
       axios
         .get(this.url, this.config)
