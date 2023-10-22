@@ -23,7 +23,9 @@ onMounted(() => {
     JSON.parse(localStorage.getItem("training"))
   );
   if (JSON.parse(localStorage.getItem("training")).length != null) {
-    trainingStore.trainingInfo = JSON.parse(localStorage.getItem("training"));
+    setTimeout(() => {
+      trainingStore.trainingInfo = JSON.parse(localStorage.getItem("training"));
+    }, 400);
   }
 });
 
