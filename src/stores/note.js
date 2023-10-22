@@ -33,7 +33,6 @@ export const useNoteStore = defineStore("note", {
         )
         .then((res) => {
           this.note.note = res.data.note;
-          console.log("notes", res);
         })
         .catch((error) => {
           console.log("erreur", error);
