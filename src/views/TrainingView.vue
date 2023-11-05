@@ -344,6 +344,14 @@ const handleCreateTraining = async () => {
           >
             <div class="text-red-600">{{ error.$message }}</div>
           </div>
+          <div class="flex items-center">
+            <input
+              id="checkbox"
+              v-model="trainingStore.trainingInfo.isPro"
+              type="checkbox"
+            />
+            <label class="mx-2" for="checkbox">Pro</label>
+          </div>
         </FormField>
         <div class="flex">
           <BaseButton
@@ -406,7 +414,6 @@ const handleCreateTraining = async () => {
             />
           </BaseButtons>
         </template>
-        <!-- {{ trainingStore.trainingInfo }} -->
       </CardBox>
     </SectionMain>
   </LayoutAuthenticated>

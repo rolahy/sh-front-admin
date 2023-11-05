@@ -38,6 +38,7 @@ export const useTrainingStore = defineStore("training", {
       description: "",
       objective: "",
       levels: [],
+      isPro: false,
     },
     isCreateFormation: false,
     isCreateQuiz: false,
