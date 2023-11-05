@@ -114,13 +114,10 @@ const addQuestionsToQuiz = () => {
 };
 
 const handleCreateTraining = async () => {
-  // const result = await v$.value.$validate();
-  trainingStore.createTraining;
-  console.log("send training");
-  // if (result) {
-  //   console.log("send training champ validé");
-  //   trainingStore.createTraining;
-  // }
+  const result = await v$.value.$validate();
+  if (result) {
+    trainingStore.createTraining();
+  }
 };
 </script>
 
