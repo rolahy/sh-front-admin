@@ -80,7 +80,6 @@ export const useTrainingStore = defineStore("training", {
         });
     },
     createTraining() {
-      console.log('call method createTraining')
       axios
         .post(this.url, this.trainingInfo, this.config)
         .then((res) => {
