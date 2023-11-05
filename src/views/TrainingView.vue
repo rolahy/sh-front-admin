@@ -117,6 +117,7 @@ const handleCreateTraining = async () => {
   const result = await v$.value.$validate();
   console.log("send training");
   if (result) {
+    console.log("send training champ validé");
     trainingStore.createTraining;
   }
 };
