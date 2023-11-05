@@ -115,6 +115,7 @@ const addQuestionsToQuiz = () => {
 
 const handleCreateTraining = async () => {
   const result = await v$.value.$validate();
+  console.log("send training");
   if (result) {
     trainingStore.createTraining;
   }
