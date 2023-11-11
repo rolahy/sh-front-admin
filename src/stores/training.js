@@ -52,7 +52,6 @@ export const useTrainingStore = defineStore("training", {
   }),
   actions: {
     getAllTraining() {
-      console.log("token", this.config);
       this.isLoading = true;
       axios
         .get(this.url, this.config)
@@ -89,6 +88,20 @@ export const useTrainingStore = defineStore("training", {
         })
         .catch((error) => {
           console.log("error", error);
+        });
+    },
+    filterTrainingByisPro(isPro) {
+      this.isLoading = true;
+      axios
+        .get(this.url + "/filter-training/" + isPro, this.config)
+        .then((res) => {
+          this.trainings = res.data;
+        })
+        .catch((error) => {
+          console.log("error", error);
+        })
+        .finally(() => {
+          this.isLoading = false;
         });
     },
   },

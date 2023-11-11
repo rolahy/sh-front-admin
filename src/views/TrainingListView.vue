@@ -2,7 +2,7 @@
 import SectionMain from "@/components/SectionMain.vue";
 import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
 import { useTrainingStore } from "@/stores/training";
-import { onMounted } from "vue";
+import { onMounted, reactive, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 
 const trainingStore = useTrainingStore();
@@ -13,6 +13,23 @@ const followTraining = (training) => {
   localStorage.setItem("training", JSON.stringify(training));
   router.push("/follow-training");
 };
+
+const isPro = ref("");
+
+const typeTrainings = reactive([
+  {
+    isPro: "true",
+    label: "Pro",
+  },
+  {
+    isPro: "false",
+    label: "Gratuit",
+  },
+]);
+
+watch(isPro, () => {
+  trainingStore.filterTrainingByisPro(isPro.value);
+});
 
 onMounted(() => {
   trainingStore.getAllTraining();
@@ -42,6 +59,17 @@ onMounted(() => {
           </div>
         </div>
         <div v-else class="container px-6 py-2 mx-auto">
+          <div>
+            <select v-model="isPro" class="dark:text-gray-700">
+              <option
+                v-for="item in typeTrainings"
+                :key="item"
+                :value="item.isPro"
+              >
+                {{ item.label }}
+              </option>
+            </select>
+          </div>
           <div
             class="grid grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-12 sm:grid-cols-2 xl:grid-cols-3 lg:grid-cols-3 mb-12"
           >

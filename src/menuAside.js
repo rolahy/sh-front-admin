@@ -1,11 +1,11 @@
 import {
-  mdiAccountCircle,
+  // mdiAccountCircle,
   mdiMonitor,
-  mdiLock,
+  // mdiLock,
   mdiSquareEditOutline,
   mdiTable,
   mdiResponsive,
-  mdiPalette,
+  // mdiPalette,
 } from "@mdi/js";
 
 export default [
@@ -37,29 +37,5 @@ export default [
         label: "Créer Formation",
       },
     ],
-  },
-  {
-    label: "Type formation",
-    icon: mdiPalette,
-    menu: [
-      {
-        to: "/",
-        label: "Pro",
-      },
-      {
-        to: "/",
-        label: "Gratuit",
-      },
-    ],
-  },
-  // {
-  //   to: "/profile",
-  //   label: "Quiz",
-  //   icon: mdiAccountCircle,
-  // },
-  // {
-  //   to: "/responsive",
-  //   label: "Questions",
-  //   icon: mdiLock,
-  // },
+  }
 ];
