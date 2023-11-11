@@ -24,10 +24,13 @@ const routes = [
     beforeEnter: (to, from, next) => {
       const auth = useAuthStore();
       if (
-        auth.userConnected &&
-        auth.userConnected.roles &&
-        auth.userConnected.roles.length > 0 &&
-        auth.userConnected.roles[0].role.includes("super_admin")
+        (auth.userConnected &&
+          auth.userConnected.roles &&
+          auth.userConnected.roles.length > 0 &&
+          auth.userConnected.roles[0].role.includes("super_admin")) ||
+        JSON.parse(
+          localStorage.getItem("userConnected")
+        ).roles[0].role.includes("super_admin")
       ) {
         next();
       } else {
