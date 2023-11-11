@@ -1,6 +1,9 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 // import Style from "@/views/StyleView.vue";
 import Home from "@/views/HomeView.vue";
+import { useAuthStore } from "@/stores/auth";
+
+const auth = useAuthStore();
 
 const routes = [
   // {
@@ -21,11 +24,7 @@ const routes = [
     name: "dashboard",
     component: Home,
     beforeEnter: (to, from, next) => {
-      if (
-        JSON.parse(
-          localStorage.getItem("userConnected")
-        ).roles[0].role.includes("super_admin")
-      ) {
+      if (!auth.userConnected.roles[0].role.includes("super_admin")) {
         return next({ name: "board" });
       }
       next();
