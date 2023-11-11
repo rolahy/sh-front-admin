@@ -2,7 +2,7 @@
 import SectionMain from "@/components/SectionMain.vue";
 import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
 import { useTrainingStore } from "@/stores/training";
-import { computed, onMounted, ref } from "vue";
+import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import IconRounded from "@/components/IconRounded.vue";
 import { mdiPlay } from "@mdi/js";
 import BaseButton from "@/components/BaseButton.vue";
@@ -82,6 +82,12 @@ onMounted(async () => {
   if (noteStore.note.note >= 7) {
     trainingStore.currentLevelIndex += 1;
   }
+});
+
+onBeforeUnmount(() => {
+  console.log("onBeforeUnmount");
+  trainingStore.currentLevelIndex = 0;
+  console.log("onBeforeUnmount 2", trainingStore.currentLevelIndex);
 });
 </script>
 
