@@ -25,11 +25,15 @@ const routes = [
       const auth = useAuthStore();
       if (
         auth.userConnected &&
-        !auth.userConnected?.roles[0].role.includes("super_admin")
+        auth.userConnected.roles &&
+        auth.userConnected.roles.length > 0 &&
+        auth.userConnected.roles[0].role.includes("super_admin")
       ) {
-        return next({ name: "login" });
+        next();
+      } else {
+        // Si l'utilisateur n'est pas connecté ou n'a pas le rôle requis, redirigez vers la page de connexion
+        next({ name: "login" });
       }
-      next();
     },
   },
   {
