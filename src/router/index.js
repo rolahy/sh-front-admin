@@ -3,6 +3,15 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import Home from "@/views/HomeView.vue";
 import { useAuthStore } from "@/stores/auth";
 
+function hasRole(auth, role) {
+  return (
+    auth.userConnected &&
+    auth.userConnected.roles &&
+    auth.userConnected.roles.length > 0 &&
+    auth.userConnected.roles[0].role.includes(role)
+  );
+}
+
 const routes = [
   // {
   //   meta: {
@@ -23,18 +32,11 @@ const routes = [
     component: Home,
     beforeEnter: (to, from, next) => {
       const auth = useAuthStore();
-
       const storedUser = JSON.parse(localStorage.getItem("userConnected"));
 
       if (
-        (auth.userConnected &&
-          auth.userConnected.roles &&
-          auth.userConnected.roles.length > 0 &&
-          auth.userConnected.roles[0].role.includes("super_admin")) ||
-        (storedUser &&
-          storedUser.roles &&
-          storedUser.roles.length > 0 &&
-          storedUser.roles[0].role.includes("super_admin"))
+        hasRole(auth, "super_admin") ||
+        (storedUser && hasRole({ userConnected: storedUser }, "super_admin"))
       ) {
         next();
       } else {
