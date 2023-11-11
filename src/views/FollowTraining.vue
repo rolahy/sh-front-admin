@@ -85,9 +85,7 @@ onMounted(async () => {
 });
 
 onBeforeUnmount(() => {
-  console.log("onBeforeUnmount");
   trainingStore.currentLevelIndex = 0;
-  console.log("onBeforeUnmount 2", trainingStore.currentLevelIndex);
 });
 </script>
 
