@@ -23,7 +23,7 @@ const routes = [
     component: Home,
     beforeEnter: () => {
       const auth = useAuthStore();
-      console.log("yayayayaay", auth);
+      console.log("yayayayaay", auth.userConnected.value);
       // if (!auth.userConnected.roles[0].role.includes("super_admin")) {
       //   return next({ name: "board" });
       // }
