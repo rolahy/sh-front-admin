@@ -27,7 +27,7 @@ const v$ = useVuelidate(rules, auth.user);
 const handleLogin = async () => {
   const result = await v$.value.$validate();
   if (result) {
-    auth.login();
+    await auth.login();
   }
 };
 </script>

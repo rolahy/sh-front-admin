@@ -19,8 +19,8 @@ export const useAuthStore = defineStore("auth", {
         .then(async (res) => {
           localStorage.setItem("access_token", res.data.access_token);
           this.access_token = res.data.access_token;
-          this.router.push({ name: "dashboard" });
           await this.getUserConnected();
+          this.router.push({ name: "dashboard" });
         })
         .catch((error) => {
           console.log("erreur", error);
@@ -35,9 +35,7 @@ export const useAuthStore = defineStore("auth", {
           "https://sh-api-v1.vercel.app/users?username=" + this.user.username
         )
         .then(async (res) => {
-          setTimeout(() => {
-            this.userConnected = res.data[0];
-          }, 2000);
+          this.userConnected = res.data[0];
           localStorage.setItem("userConnected", JSON.stringify(res.data[0]));
         })
         .catch((error) => {
