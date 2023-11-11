@@ -26,7 +26,9 @@ const routes = [
       setTimeout(() => {
         console.log("yayayayaay", auth.userConnected);
       }, 2000);
-      console.log("yayayayaay1", auth);
+      console.log("yayayayaay1", auth.access_token);
+      console.log("yayayayaay1", auth.isLogin);
+
       // if (!auth.userConnected.roles[0].role.includes("super_admin")) {
       //   return next({ name: "board" });
       // }
