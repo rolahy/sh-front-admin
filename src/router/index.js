@@ -21,12 +21,13 @@ const routes = [
     path: "/dashboard",
     name: "dashboard",
     component: Home,
-    beforeEnter: (to, from, next) => {
+    beforeEnter: () => {
       const auth = useAuthStore();
-      if (!auth.userConnected.roles[0].role.includes("super_admin")) {
-        return next({ name: "board" });
-      }
-      next();
+      console.log("yayayayaay", auth.userConnected.roles);
+      // if (!auth.userConnected.roles[0].role.includes("super_admin")) {
+      //   return next({ name: "board" });
+      // }
+      // next();
     },
   },
   {
