@@ -2,15 +2,7 @@ import { createRouter, createWebHashHistory } from "vue-router";
 // import Style from "@/views/StyleView.vue";
 import Home from "@/views/HomeView.vue";
 import { useAuthStore } from "@/stores/auth";
-
-function hasRole(auth, role) {
-  return (
-    auth.userConnected &&
-    auth.userConnected.roles &&
-    auth.userConnected.roles.length > 0 &&
-    auth.userConnected.roles[0].role.includes(role)
-  );
-}
+import { hasRole } from "@/utils/index";
 
 const routes = [
   // {
