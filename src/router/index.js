@@ -44,6 +44,19 @@ const routes = [
     path: "/users",
     name: "users",
     component: () => import("@/views/TablesView.vue"),
+    beforeEnter: (to, from, next) => {
+      const auth = useAuthStore();
+      const storedUser = JSON.parse(localStorage.getItem("userConnected"));
+
+      if (
+        hasRole(auth, "super_admin") ||
+        (storedUser && hasRole({ userConnected: storedUser }, "super_admin"))
+      ) {
+        next();
+      } else {
+        next({ name: "login" });
+      }
+    },
   },
   {
     meta: {
@@ -52,6 +65,19 @@ const routes = [
     path: "/roles",
     name: "roles",
     component: () => import("@/views/RoleView.vue"),
+    beforeEnter: (to, from, next) => {
+      const auth = useAuthStore();
+      const storedUser = JSON.parse(localStorage.getItem("userConnected"));
+
+      if (
+        hasRole(auth, "super_admin") ||
+        (storedUser && hasRole({ userConnected: storedUser }, "super_admin"))
+      ) {
+        next();
+      } else {
+        next({ name: "login" });
+      }
+    },
   },
   {
     meta: {
@@ -60,6 +86,19 @@ const routes = [
     path: "/profile",
     name: "profile",
     component: () => import("@/views/ProfileView.vue"),
+    beforeEnter: (to, from, next) => {
+      const auth = useAuthStore();
+      const storedUser = JSON.parse(localStorage.getItem("userConnected"));
+
+      if (
+        hasRole(auth, "super_admin") ||
+        (storedUser && hasRole({ userConnected: storedUser }, "super_admin"))
+      ) {
+        next();
+      } else {
+        next({ name: "login" });
+      }
+    },
   },
   {
     meta: {
@@ -76,6 +115,19 @@ const routes = [
     path: "/training",
     name: "training",
     component: () => import("@/views/TrainingView.vue"),
+    beforeEnter: (to, from, next) => {
+      const auth = useAuthStore();
+      const storedUser = JSON.parse(localStorage.getItem("userConnected"));
+
+      if (
+        hasRole(auth, "super_admin") ||
+        (storedUser && hasRole({ userConnected: storedUser }, "super_admin"))
+      ) {
+        next();
+      } else {
+        next({ name: "login" });
+      }
+    },
   },
   {
     meta: {
@@ -84,6 +136,19 @@ const routes = [
     path: "/training-list",
     name: "training-list",
     component: () => import("@/views/TrainingListView.vue"),
+    beforeEnter: (to, from, next) => {
+      const auth = useAuthStore();
+      const storedUser = JSON.parse(localStorage.getItem("userConnected"));
+
+      if (
+        hasRole(auth, "super_admin") ||
+        (storedUser && hasRole({ userConnected: storedUser }, "super_admin"))
+      ) {
+        next();
+      } else {
+        next({ name: "login" });
+      }
+    },
   },
   {
     meta: {
@@ -92,6 +157,19 @@ const routes = [
     path: "/follow-training",
     name: "follow-training",
     component: () => import("@/views/FollowTraining.vue"),
+    beforeEnter: (to, from, next) => {
+      const auth = useAuthStore();
+      const storedUser = JSON.parse(localStorage.getItem("userConnected"));
+
+      if (
+        hasRole(auth, "super_admin") ||
+        (storedUser && hasRole({ userConnected: storedUser }, "super_admin"))
+      ) {
+        next();
+      } else {
+        next({ name: "login" });
+      }
+    },
   },
   {
     meta: {
@@ -100,6 +178,19 @@ const routes = [
     path: "/try-quiz",
     name: "try-quiz",
     component: () => import("@/views/TryQuiz.vue"),
+    beforeEnter: (to, from, next) => {
+      const auth = useAuthStore();
+      const storedUser = JSON.parse(localStorage.getItem("userConnected"));
+
+      if (
+        hasRole(auth, "super_admin") ||
+        (storedUser && hasRole({ userConnected: storedUser }, "super_admin"))
+      ) {
+        next();
+      } else {
+        next({ name: "login" });
+      }
+    },
   },
   {
     meta: {
