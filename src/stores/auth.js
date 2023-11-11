@@ -20,7 +20,6 @@ export const useAuthStore = defineStore("auth", {
           localStorage.setItem("access_token", res.data.access_token);
           this.access_token = res.data.access_token;
           await this.getUserConnected();
-          this.router.push({ name: "dashboard" });
         })
         .catch((error) => {
           console.log("erreur", error);
@@ -37,6 +36,7 @@ export const useAuthStore = defineStore("auth", {
         .then(async (res) => {
           this.userConnected = res.data[0];
           localStorage.setItem("userConnected", JSON.stringify(res.data[0]));
+          this.router.push({ name: "dashboard" });
         })
         .catch((error) => {
           console.log("erreur", error);
