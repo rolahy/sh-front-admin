@@ -23,9 +23,7 @@ const routes = [
     component: Home,
     beforeEnter: () => {
       const auth = useAuthStore();
-      setTimeout(() => {
-        console.log("yayayayaay", auth.userConnected);
-      }, 2000);
+      console.log("yayayayaay", auth.userConnected);
       console.log("yayayayaay1", auth.access_token);
       console.log("yayayayaay1", auth.isLogin);
 
