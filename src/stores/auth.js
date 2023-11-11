@@ -12,15 +12,15 @@ export const useAuthStore = defineStore("auth", {
     isLogin: false,
   }),
   actions: {
-    login() {
+    async login() {
       this.isLogin = true;
       axios
         .post("https://sh-api-v1.vercel.app/auth/login", this.user)
-        .then((res) => {
+        .then(async (res) => {
           localStorage.setItem("access_token", res.data.access_token);
           this.access_token = res.data.access_token;
           this.router.push({ name: "dashboard" });
-          this.getUserConnected();
+          await this.getUserConnected();
         })
         .catch((error) => {
           console.log("erreur", error);
@@ -29,7 +29,7 @@ export const useAuthStore = defineStore("auth", {
           this.isLogin = false;
         });
     },
-    getUserConnected() {
+    async getUserConnected() {
       axios
         .get(
           "https://sh-api-v1.vercel.app/users?username=" + this.user.username
