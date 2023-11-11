@@ -20,6 +20,16 @@ const routes = [
     path: "/dashboard",
     name: "dashboard",
     component: Home,
+    beforeEnter: (to, from, next) => {
+      if (
+        JSON.parse(
+          localStorage.getItem("userConnected")
+        ).roles[0].role.includes("super_admin")
+      ) {
+        return next({ name: "board" });
+      }
+      next();
+    },
   },
   {
     meta: {

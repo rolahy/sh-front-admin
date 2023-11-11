@@ -35,10 +35,8 @@ export const useAuthStore = defineStore("auth", {
           "https://sh-api-v1.vercel.app/users?username=" + this.user.username
         )
         .then((res) => {
-          console.log("use connected", res.data);
           this.userConnected = res.data[0];
           localStorage.setItem("userConnected", JSON.stringify(res.data[0]));
-          console.log("this.userConnected", res.data);
         })
         .catch((error) => {
           console.log("erreur", error);
