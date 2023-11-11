@@ -23,14 +23,18 @@ const routes = [
     component: Home,
     beforeEnter: (to, from, next) => {
       const auth = useAuthStore();
+
+      const storedUser = JSON.parse(localStorage.getItem("userConnected"));
+
       if (
         (auth.userConnected &&
           auth.userConnected.roles &&
           auth.userConnected.roles.length > 0 &&
           auth.userConnected.roles[0].role.includes("super_admin")) ||
-        JSON.parse(
-          localStorage.getItem("userConnected")
-        ).roles[0].role.includes("super_admin")
+        (storedUser &&
+          storedUser.roles &&
+          storedUser.roles.length > 0 &&
+          storedUser.roles[0].role.includes("super_admin"))
       ) {
         next();
       } else {
