@@ -3,8 +3,6 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import Home from "@/views/HomeView.vue";
 import { useAuthStore } from "@/stores/auth";
 
-const auth = useAuthStore();
-
 const routes = [
   // {
   //   meta: {
@@ -24,6 +22,7 @@ const routes = [
     name: "dashboard",
     component: Home,
     beforeEnter: (to, from, next) => {
+      const auth = useAuthStore();
       if (!auth.userConnected.roles[0].role.includes("super_admin")) {
         return next({ name: "board" });
       }
