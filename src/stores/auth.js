@@ -37,6 +37,7 @@ export const useAuthStore = defineStore("auth", {
           this.userConnected = res.data[0];
           localStorage.setItem("userConnected", JSON.stringify(res.data[0]));
           this.router.push({ name: "dashboard" });
+          //TODO add switch case in function of role userConnected To redirect user in the route that suits
         })
         .catch((error) => {
           console.log("erreur", error);
