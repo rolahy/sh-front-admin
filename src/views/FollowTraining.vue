@@ -76,7 +76,8 @@ onMounted(async () => {
   trainingStore.videoInfo = trainings.value.levels[0]?.videos[0]; // initialisation videoInfo state dans store.
   await noteStore.getNote(
     authStore.userConnected._id,
-    trainingStore.trainingInfo._id
+    trainingStore.trainingInfo._id,
+    trainingStore.levelInfoArray._id
   );
   // TODO add another condition is 1 mois apres clique 1er video
   if (noteStore.note.note >= 7) {
