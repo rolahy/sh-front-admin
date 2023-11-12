@@ -73,6 +73,7 @@ const tryQuiz = (level) => {
 onMounted(async () => {
   authStore.userConnected = JSON.parse(localStorage.getItem("userConnected"));
   trainingStore.trainingInfo = JSON.parse(localStorage.getItem("training"));
+  trainingStore.levelInfoArray = JSON.parse(localStorage.getItem("level"));
   trainingStore.videoInfo = trainings.value.levels[0]?.videos[0]; // initialisation videoInfo state dans store.
   await noteStore.getNote(
     authStore.userConnected._id,
