@@ -6,6 +6,7 @@ export const useNoteStore = defineStore("note", {
     note: {
       userId: "",
       trainingId: "",
+      levelId: "",
       note: 0,
     },
     config: {
