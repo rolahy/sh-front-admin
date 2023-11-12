@@ -50,6 +50,7 @@ const sendResponseQuiz = () => {
   }
   noteStore.note.userId = authStore.userConnected._id;
   noteStore.note.trainingId = trainingStore.trainingInfo._id;
+  noteStore.note.levelId = trainingStore.levelInfoArray._id;
   noteStore.note.note = score.value;
   console.log("note amzao", noteStore.note);
   noteStore.postNote();
