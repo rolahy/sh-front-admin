@@ -5,7 +5,7 @@ import {
   mdiSquareEditOutline,
   mdiTable,
   mdiResponsive,
-  // mdiPalette,
+  mdiPalette,
 } from "@mdi/js";
 
 export default [
@@ -18,6 +18,11 @@ export default [
     to: "/users",
     label: "Utilisateurs",
     icon: mdiTable,
+  },
+  {
+    to: "/training-list",
+    label: "cours",
+    icon: mdiPalette,
   },
   {
     to: "/roles",
