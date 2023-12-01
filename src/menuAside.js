@@ -43,7 +43,7 @@ const navigationItems = [
     to: "/sponsorship",
     label: "parrainage",
     icon: mdiAccountCircle,
-  }
+  },
   {
     to: "/roles",
     label: "Role",
