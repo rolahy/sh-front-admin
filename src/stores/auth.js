@@ -36,8 +36,8 @@ export const useAuthStore = defineStore("auth", {
         .then(async (res) => {
           this.userConnected = res.data[0];
           localStorage.setItem("userConnected", JSON.stringify(res.data[0]));
-          console.log("apprenant connected", this.userConnected)
-          if (res.data[0].role == "apprenant") {
+          console.log("apprenant connected", res.data[0].roles[0].role)
+          if (res.data[0].roles[0].role == "apprenant") {
             console.log("apprenant connected")
             this.router.push({ name: "course" });
           } else {
