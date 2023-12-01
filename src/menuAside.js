@@ -30,10 +30,20 @@ const navigationItems = [
     icon: mdiAccountCircle,
   },
   {
+    to: "/lists-child",
+    label: "liste des filleuls",
+    icon: mdiAccountCircle,
+  },
+  {
     to: "/lists-project",
-    label: "Listes des projet",
+    label: "Listes des projets",
     icon: mdiLock,
   },
+  {
+    to: "/sponsorship",
+    label: "parrainage",
+    icon: mdiAccountCircle,
+  }
   {
     to: "/roles",
     label: "Role",
