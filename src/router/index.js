@@ -152,6 +152,27 @@ const routes = [
   },
   {
     meta: {
+      title: "cours",
+    },
+    path: "/course",
+    name: "course",
+    component: () => import("@/views/TrainingListView.vue"),
+    beforeEnter: (to, from, next) => {
+      const auth = useAuthStore();
+      const storedUser = JSON.parse(localStorage.getItem("userConnected"));
+
+      if (
+        hasRole(auth, "apprenant") ||
+        (storedUser && hasRole({ userConnected: storedUser }, "apprenant"))
+      ) {
+        next();
+      } else {
+        next({ name: "login" });
+      }
+    },
+  },
+  {
+    meta: {
       title: "Listes des formations",
     },
     path: "/follow-training",
