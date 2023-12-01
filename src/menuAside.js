@@ -8,7 +8,7 @@ import {
   mdiPalette,
 } from "@mdi/js";
 
-const userRole = "apprenant";
+const storedUser = JSON.parse(localStorage.getItem("userConnected"));
 
 const navigationItems = [
   {
@@ -49,7 +49,7 @@ const navigationItems = [
 
 // Filtrer les éléments en fonction du rôle
 const filteredNavigationItems = navigationItems.filter((item) => {
-  if (item.to === "/course" && userRole === "apprenant") {
+  if (item.to === "/course" && storedUser.roles[0].role === "apprenant") {
     return true;
   }
   if (item.menu) {
