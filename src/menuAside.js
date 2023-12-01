@@ -1,5 +1,5 @@
 import {
-  // mdiAccountCircle,
+  mdiAccountCircle,
   mdiMonitor,
   // mdiLock,
   mdiSquareEditOutline,
@@ -23,6 +23,11 @@ const navigationItems = [
     to: "/course",
     label: "cours",
     icon: mdiPalette,
+  },
+  {
+    to: "/submit-project",
+    label: "Déposer projet",
+    icon: mdiAccountCircle,
   },
   {
     to: "/roles",
