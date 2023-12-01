@@ -8,7 +8,9 @@ import {
   mdiPalette,
 } from "@mdi/js";
 
-export default [
+const userRole = "apprenant";
+
+const navigationItems = [
   {
     to: "/dashboard",
     icon: mdiMonitor,
@@ -42,5 +44,20 @@ export default [
         label: "Créer Formation",
       },
     ],
-  }
+  },
 ];
+
+// Filtrer les éléments en fonction du rôle
+const filteredNavigationItems = navigationItems.filter((item) => {
+  if (item.to === "/course" && userRole === "apprenant") {
+    return true;
+  }
+  if (item.menu) {
+    // Si c'est un sous-menu, filtrez également ses éléments
+    item.menu = item.menu.filter((subItem) => subItem.to === "/course");
+    return item.menu.length > 0;
+  }
+  return false;
+});
+
+export default filteredNavigationItems;
