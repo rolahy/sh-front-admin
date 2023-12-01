@@ -1,7 +1,7 @@
 import {
   mdiAccountCircle,
   mdiMonitor,
-  // mdiLock,
+  mdiLock,
   mdiSquareEditOutline,
   mdiTable,
   mdiResponsive,
@@ -28,6 +28,11 @@ const navigationItems = [
     to: "/submit-project",
     label: "Déposer projet",
     icon: mdiAccountCircle,
+  },
+  {
+    to: "/lists-project",
+    label: "Listes des projet",
+    icon: mdiLock,
   },
   {
     to: "/roles",
