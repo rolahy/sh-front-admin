@@ -18,7 +18,9 @@ const auth = useAuthStore();
 
 const filteredNavigationItems =
   auth.userConnected.roles[0].role === "apprenant"
-    ? menuAside.filter((item) => item.to == "/course" || "/submit-projec")
+    ? menuAside.filter(
+        (item) => item.to == "/course" || item.to == "/submit-projec"
+      )
     : menuAside;
 
 useMainStore().setUser({
