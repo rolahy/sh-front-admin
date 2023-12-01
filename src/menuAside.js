@@ -7,8 +7,9 @@ import {
   mdiResponsive,
   mdiPalette,
 } from "@mdi/js";
+import { useAuthStore } from "@/stores/auth";
 
-const storedUser = JSON.parse(localStorage.getItem("userConnected"));
+const auth = useAuthStore();
 
 const navigationItems = [
   {
@@ -49,7 +50,10 @@ const navigationItems = [
 
 // Filtrer les éléments en fonction du rôle
 const filteredNavigationItems = navigationItems.filter((item) => {
-  if (item.to === "/course" && storedUser?.roles[0].role === "apprenant") {
+  if (
+    item.to === "/course" &&
+    auth.userConnected?.roles[0].role == "apprenant"
+  ) {
     return true;
   }
   if (item.menu) {
