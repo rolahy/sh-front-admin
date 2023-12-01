@@ -36,7 +36,7 @@ const navigationItems = [
   },
   {
     to: "/lists-project",
-    label: "Listes des projets",
+    label: "Liste des projets",
     icon: mdiLock,
   },
   {
