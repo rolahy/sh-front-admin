@@ -21,7 +21,9 @@ const filteredNavigationItems =
     ? menuAside.filter(
         (item) => item.to == "/course" || item.to == "/submit-project"
       )
-    : menuAside;
+    : menuAside.filter(
+        (item) => item.to != "/course" || item.to != "/submit-project"
+      );
 
 useMainStore().setUser({
   name: "John Doe",
