@@ -20,7 +20,7 @@ export default [
     icon: mdiTable,
   },
   {
-    to: "/training-list",
+    to: "/course",
     label: "cours",
     icon: mdiPalette,
   },

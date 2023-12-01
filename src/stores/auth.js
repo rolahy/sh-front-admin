@@ -36,7 +36,11 @@ export const useAuthStore = defineStore("auth", {
         .then(async (res) => {
           this.userConnected = res.data[0];
           localStorage.setItem("userConnected", JSON.stringify(res.data[0]));
-          this.router.push({ name: "dashboard" });
+          if (res.data[0].role == "apprenant") {
+            this.router.push({ name: "course" });
+          } else {
+            this.router.push({ name: "dashboard" });
+          }
           //TODO add switch case in function of role userConnected To redirect user in the route that suits
         })
         .catch((error) => {
