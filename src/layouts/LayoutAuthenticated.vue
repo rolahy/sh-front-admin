@@ -12,6 +12,25 @@ import NavBar from "@/components/NavBar.vue";
 import NavBarItemPlain from "@/components/NavBarItemPlain.vue";
 import AsideMenu from "@/components/AsideMenu.vue";
 import FooterBar from "@/components/FooterBar.vue";
+import { useAuthStore } from "@/stores/auth";
+
+const auth = useAuthStore();
+
+// Filtrer les éléments en fonction du rôle
+const filteredNavigationItems = menuAside.filter((item) => {
+  if (
+    item.to === "/course" &&
+    auth.userConnected.roles[0].role == "apprenant"
+  ) {
+    return true;
+  }
+  if (item.menu) {
+    // Si c'est un sous-menu, filtrez également ses éléments
+    item.menu = item.menu.filter((subItem) => subItem.to === "/course");
+    return item.menu.length > 0;
+  }
+  return false;
+});
 
 useMainStore().setUser({
   name: "John Doe",
@@ -91,7 +110,7 @@ const menuClick = (event, item) => {
       <AsideMenu
         :is-aside-mobile-expanded="isAsideMobileExpanded"
         :is-aside-lg-active="isAsideLgActive"
-        :menu="menuAside"
+        :menu="filteredNavigationItems"
         @menu-click="menuClick"
         @aside-lg-close-click="isAsideLgActive = false"
       />
