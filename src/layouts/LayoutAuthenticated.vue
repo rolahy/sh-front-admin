@@ -16,21 +16,10 @@ import { useAuthStore } from "@/stores/auth";
 
 const auth = useAuthStore();
 
-// Filtrer les éléments en fonction du rôle
-const filteredNavigationItems = menuAside.filter((item) => {
-  if (
-    item.to === "/course" &&
-    auth.userConnected.roles[0].role == "apprenant"
-  ) {
-    return true;
-  }
-  if (item.menu) {
-    // Si c'est un sous-menu, filtrez également ses éléments
-    item.menu = item.menu.filter((subItem) => subItem.to === "/course");
-    return item.menu.length > 0;
-  }
-  return false;
-});
+const filteredNavigationItems =
+  auth.userConnected.roles[0].role === "apprenant"
+    ? menuAside.filter((item) => item.to === "/course")
+    : menuAside;
 
 useMainStore().setUser({
   name: "John Doe",
