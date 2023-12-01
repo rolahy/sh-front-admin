@@ -183,8 +183,8 @@ const routes = [
       const storedUser = JSON.parse(localStorage.getItem("userConnected"));
 
       if (
-        hasRole(auth, "super_admin") ||
-        (storedUser && hasRole({ userConnected: storedUser }, "super_admin"))
+        hasRole(auth, "super_admin" || "apprenant") ||
+        (storedUser && hasRole({ userConnected: storedUser }, "super_admin" || "apprenant"))
       ) {
         next();
       } else {
@@ -204,8 +204,8 @@ const routes = [
       const storedUser = JSON.parse(localStorage.getItem("userConnected"));
 
       if (
-        hasRole(auth, "super_admin") ||
-        (storedUser && hasRole({ userConnected: storedUser }, "super_admin"))
+        hasRole(auth, "super_admin" || "apprenant") ||
+        (storedUser && hasRole({ userConnected: storedUser }, "super_admin" || "apprenant"))
       ) {
         next();
       } else {
